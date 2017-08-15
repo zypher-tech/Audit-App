@@ -8,9 +8,14 @@ var router = express.Router();
 
 router.get('/',(req,res)=>{
     res.render('home');
-})
-router.get('/createOrganisation', (req, res) => {
-    // Do App stuff here
+});
+
+
+
+router.post('/createOrganisation', (req, res) => {
+    
+   
+
 });
 
 
@@ -87,6 +92,9 @@ router.get('/createDepartment',(req, res) => {
 
 
   */
+
+
+
 router.get('/createDomain',(req, res) => {
     
 });
