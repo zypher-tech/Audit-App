@@ -1,0 +1,16 @@
+
+@media screen and (min-width: 1000px) {
+    #create_button {
+        position: fixed;
+        right: 0px;
+        bottom: 0px;
+    }
+}
+
+@media screen and (max-width: 999px)  {
+    #create_button {
+        position: fixed;
+        right: 0px;
+        bottom: 0px;
+    }
+}
