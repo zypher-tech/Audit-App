@@ -10,22 +10,27 @@ router.get('/',(req,res)=>{
     res.render('home');
 });
 
-<<<<<<< HEAD
+
+
+
 
 
 router.post('/createOrganisation', (req, res) => {
-    
-   
-
-=======
-router.post('/createOrganisation', (req, res) => {
-    organization={
-		name:req.body.name,
+     var organization={
+		orgName:req.body.name,
+		orgAdditionalInfo:req.body.info,
 		id:Date.now()
-	}
-var orgRef = db.ref("/oranization");
-orgRef.push(organization);
->>>>>>> 6d23ad96ce2e4b9e42a4c380817645d30b152bea
+	};
+	var orgRef = db.ref("/organization");
+	orgRef.push(organization,err => {
+		if (err) {
+			res.send({status:0});
+		}
+		else{
+			res.send(organization);
+		}
+	});
+
 });
 
 
@@ -50,7 +55,10 @@ orgRef.push(organization);
 
   */
 router.get('/createLocation',(req, res) => {
-    
+    	
+    	// newLocation = {
+    	// 	orgId:
+    	// };
 });
 
 
