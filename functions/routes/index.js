@@ -3,14 +3,20 @@ const express=require('express');
 const firebase=require('firebase-admin');
 const app=express();
 var router = express.Router();
-
+var db = firebase.database();
 
 
 router.get('/',(req,res)=>{
     res.render('home');
-})
-router.get('/createOrganisation', (req, res) => {
-    // Do App stuff here
+});
+
+router.post('/createOrganisation', (req, res) => {
+    organization={
+		name:req.body.name,
+		id:Date.now()
+	}
+var orgRef = db.ref("/oranization");
+orgRef.push(organization);
 });
 
 
