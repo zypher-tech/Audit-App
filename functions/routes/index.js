@@ -24,7 +24,7 @@ router.post('/createOrganisation', (req, res) => {
      var newOrg = {
 
 		orgName:req.body.name,
-		orgAdditionalInfo:req.body.info,
+		// orgAdditionalInfo:req.body.info,
 		orgId:Date.now()
 	};
 
@@ -275,11 +275,50 @@ router.post('/saveQuestion',(req, res) => {
 	var questionRef  = db.ref("questions");
 
 	console.log("save question called");
-
+	// getting Question Id
 	var questionId = req.body.questionId;
-	questionRef.orderByChild("questionId").equalTo(questionId).once("value",snap=>{
-		console.log("isnide callback");
-		 res.send(snap.val());
+
+	// Querying by Question Id
+	questionRef.orderByChild("questionId").equalTo(questionId).once("child_added",snap=>{
+		// snap will have a single Ke
+
+		try{
+
+
+			var questionRef = "questions/"+snap.key;
+			console.log(question);
+
+		 var answerTO = db.ref(question);
+		 console.log
+		 questionReftoSave.once("value",s=>{
+
+		 	 var answerObj = {
+						"answers":{
+								option:req.body.option, // can be yes,no,partial
+								extraText:req.body.extraText,
+								fileUrl:req.body.fileUrl,
+								critical:req.body.critical
+						}
+				};
+				questionReftoSave.update(answerObj,err => {
+					if (err) {
+						res.send({status:0});
+					}
+					else{
+						res.send({status:1});
+					}
+				});
+		 	
+		 });
+
+
+		 // console.log("third : "+snap.ref.key);
+		
+		}
+		catch(e){
+			console.log("Error "+e);
+		}
+		 
 	});
 
 
@@ -315,6 +354,8 @@ router.post('/saveQuestion',(req, res) => {
  //    		}
 
  //    });
+	
+	
 
     
 });
