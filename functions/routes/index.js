@@ -298,26 +298,25 @@ router.post('/saveQuestion',(req, res) => {
 	// Querying by Question Id
 	questionRef.orderByChild("questionId").equalTo(questionId).once("child_added",snap=>{
 		// snap will have a single Ke
+		//Please see output using res.send(snap.val())
 
 		try{
 
 
-			var questionRef = "questions/"+snap.key;
-			console.log(question);
-
-		 var answerTO = db.ref(question);
-		 console.log
-		 questionReftoSave.once("value",s=>{
-
+			var questionPath = "questions/"+snap.key;
+    		var questionRef= db.ref(questionPath);
+    		// Loading the Question 
+		    questionRef.once("value",s=>{
+		    	// Buidl the Answer object
 		 	 var answerObj = {
 						"answers":{
 								option:req.body.option, // can be yes,no,partial
-								extraText:req.body.extraText,
-								fileUrl:req.body.fileUrl,
-								critical:req.body.critical
+								extraText:req.body.extraText, // textbox value
+								fileUrl:req.body.fileUrl, // attachement URL
+								critical:req.body.critical // critical/ not critical 
 						}
 				};
-				questionReftoSave.update(answerObj,err => {
+				questionRef.update(answerObj,err => {
 					if (err) {
 						res.send({status:0});
 					}
