@@ -1,9 +1,22 @@
 
 @media screen and (min-width: 1000px) {
+    .loading {
+        position: absolute; 
+        top: 50%; 
+        left: 450px;
+    }
+    
     #list-items {
         display: none;
-        padding-top: 10px;
+        padding-top: 30px;
     }
+    
+    .list-item {
+        padding: 8px;
+        margin-bottom: 8px;
+        box-shadow: 1px 1px 4px grey;
+    }
+    
     #options {
         display: none;
     }
@@ -72,6 +85,18 @@
         display: none;
     }
     
+    .loading {
+        position: absolute; 
+        top: 50%; 
+        width: 95%;
+    }
+    
+    .list-item {
+        padding: 8px;
+        margin-bottom: 8px;
+        box-shadow: 1px 1px 4px grey;
+    }
+    
     #create_button {
         position: fixed;
         right: 15px;
@@ -91,7 +116,7 @@
     }
     
     #main {
-        padding: 15px;
+        padding: 6px;
         overflow: auto;
         height: auto;
         background-color: cyan;
@@ -105,9 +130,12 @@
         display: none;
     }
     
-    #show-list, #options {
+    #options {
         float: right;
-        margin-left: 10px;
+    }
+    
+    #show-list {
+        float: left;
     }
     
     .welcome {
