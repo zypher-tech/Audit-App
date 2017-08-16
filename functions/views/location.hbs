@@ -44,6 +44,9 @@
     
     <!--main content-->
     <div id="content">
+        <div id="nav-bar">
+            <a href="home.hbs">Organizations</a> &nbsp; <span></span>
+        </div>
         <div id="list-items">
             <!--list of organizations would go here-->
             <div class="loading"><div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div></div>
@@ -93,6 +96,7 @@
         $('#placeho').prepend(page_name);
         $('#show-list span').text(page_name);
         $('title').text(page_name);
+        $('#nav-bar span').html('/ &nbsp;' + page_name);
     </script>
     <!--JavaScript file imported-->
     <script src = "scripts/location.js"></script>

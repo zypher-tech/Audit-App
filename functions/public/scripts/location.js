@@ -18,3 +18,7 @@ $.ajax({
     },
     error: function(){alert('Error retrieving data. Please try again later.');}
 });
+
+$('#options').click(function(){
+    $('#admin-user').toggle();
+});
