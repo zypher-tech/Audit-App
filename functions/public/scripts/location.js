@@ -1,4 +1,12 @@
-link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getOrganisations';
+link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getLocations';
+
+var urlParams = new URLSearchParams(window.location.search);
+
+var entries = urlParams.entries();
+for(pair of entries) { 
+  var orgid = pair[1];
+  console.log(orgid);
+}
 
 $.ajax({
     headers : {
@@ -9,11 +17,14 @@ $.ajax({
     success: function(res) {
         $('.loading').remove();
         $('.list-item').remove();
-        for(var i=0; i< res.orgs.length; i++) {
-            var org = res.orgs[i];
+        for(var i=0; i< res.locs.length; i++) {
+                var locs = res.locs[i];
+            //display list of location filtering using orgid
             $('#list-items').append(
-                '<div class="list-item"><h2>'+org.name+'</h2><br>id: '+org.id+'</div>'
+                '<a href="department.hbs?loc='+locs.name+'"><div class="list-item"><h2>'+locs.name+'</h2></a>'
             );
+            
+            $('#nav-bar').html('<a href="home.hbs">&lt; BACK</a>');
         }
     },
     error: function(){alert('Error retrieving data. Please try again later.');}
@@ -22,3 +33,4 @@ $.ajax({
 $('#options').click(function(){
     $('#admin-user').toggle();
 });
+
