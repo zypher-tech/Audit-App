@@ -1,5 +1,9 @@
 
 @media screen and (min-width: 1000px) {
+    #list-items {
+        display: none;
+        padding-top: 10px;
+    }
     #options {
         display: none;
     }
@@ -52,19 +56,22 @@
     }
     
     #show-list {
-        position: absolute;
-        left: 40%;
+        float: right;
         padding: 17px;
     }
     
     #admin-user {
-        position: absolute;
-        right: 0px;
+        float: right;
         padding: 17px;
     }
 }
 
 @media screen and (max-width: 999px)  {
+    #list-items {
+        padding: 10px;
+        display: none;
+    }
+    
     #create_button {
         position: fixed;
         right: 15px;
