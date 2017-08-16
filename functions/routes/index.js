@@ -66,7 +66,7 @@ router.post('/createOrganisation', (req, res) => {
 
 
   */
-router.get('/createLocation',(req, res) => {
+router.post('/createLocation',(req, res) => {
     	
     	var newLocation = {
     		locationId:Date.now(),
@@ -106,7 +106,7 @@ router.get('/createLocation',(req, res) => {
 
 
   */
-router.get('/createDepartment',(req, res) => {
+router.post('/createDepartment',(req, res) => {
     	var newDept = {
     		locationId:req.body.locationId,
     		orgId:req.body.orgId,
@@ -154,6 +154,23 @@ router.get('/createDepartment',(req, res) => {
 
 
 router.post('/createDomain',(req, res) => {
+	var newDomain = {
+		orgId:req.body.orgId,
+		locationId: req.body.locationId,
+		deptId:req.body.deptId,
+		domainId:Date.now(),
+		domainName:req.body.domainName
+	};
+	var domainRef = db.ref("domains");
+    	domainRef.push(newDomain,err => {
+    		if (err) {
+    			res.send({status:0});
+    		}
+    		else{
+    			newDomain.status = 1;
+    			res.send(newDomain);
+    		}
+    	});
     
 });
 
