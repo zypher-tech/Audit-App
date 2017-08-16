@@ -2,6 +2,8 @@
 //gets the organizations
 var link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getOrganisations';
 
+var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createOrganisation';
+
 $('#options').click(function(){
     $('#admin-user').toggle();
 });
@@ -35,8 +37,13 @@ $('#orgs').click(function(){
 });
 
 $('#submitName').click(function(e){
-    var input = $('#name').val();
+    var input = $('#orgname').val();
     console.log(input);
-    
-    //call createOrganization method
+    if (input.split('').length != 0) {
+        //call createOrganization method
+        $.post(createLink, input, function(result){
+            console.log(result);
+        });
+    }
 });
+
