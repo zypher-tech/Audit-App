@@ -21,28 +21,26 @@ router.get('/home',(req,res)=>{
 
 router.post('/createOrganisation', (req, res) => {
 
-     var newOrg = {
-
-		orgName:req.body.name,
-		// orgAdditionalInfo:req.body.info,
-		orgId:Date.now()
-	};
 
 	var orgRef = db.ref("organisation");
-	orgRef.push(newOrg,err => {
-		if (err) {
-			res.set('Access-Control-Allow-Origin', "*")
-  			res.set('Access-Control-Allow-Methods', 'GET, POST')
-			res.status(200).send({status:0});
-		}
-		else{
-	  	  	res.set('Access-Control-Allow-Origin', "*")
-	  		res.set('Access-Control-Allow-Methods', 'GET, POST')
-	  		newOrg.status = 1;
-			res.status(200).send(newOrg);
-		}
-	});
+	orgRef.once("value",snap => {
+		var count = snap.numChildren()+1;
+    	 var newOrg = {
+			orgName:req.body.name,
+			// orgAdditionalInfo:req.body.info,
+			orgId:count
+		};
+		orgRef.child(count).set(newOrg,err => {
+			if (err) {
+				res.send({status:0});
+			}
+			else{
 
+			    newOrg.status = 1;
+				res.send(newOrg);
+			}
+		});
+	});
 });
 
 
@@ -66,21 +64,21 @@ router.post('/createOrganisation', (req, res) => {
 
 
   */
-router.get('/createLocation',(req, res) => {
+router.post('/createLocation',(req, res) => {
     	
     	var newLocation = {
-    		locationId:Date.now(),
     		orgId:req.body.orgId,
-    		locationName: req.body.locationName,
+    		locationName:req.body.locationName,
+    		locationId:Date.now()
     	};
-
     	var locationRef = db.ref("locations");
-    	locationRef.push(newLocation,err => {
+    	locationRef.push(newLocation,err=>{
     		if (err) {
     			res.send({status:0});
     		}
     		else{
-    			res.send(newLocation);
+    			newLocation.status = 1;
+    			res.send(newLocation)
     		}
     	});
 });
@@ -154,6 +152,24 @@ router.get('/createDepartment',(req, res) => {
 
 
 router.post('/createDomain',(req, res) => {
+	var newDomain = {
+		orgId:req.body.orgId,
+		locationId:req.body.locationId,
+		deptId:req.body.deptId,
+		domainId:Date.now(),
+		domainName:req.body.domainName,
+	};
+	var domainRef = db.ref("domains");
+	domainRef.push(newDomain,err=>{
+		if (err) {
+			res.send({status:0});
+
+		}
+		else{
+			newDomain.status = 1;
+			res.send(newDomain);
+		}
+	});
     
 });
 
@@ -207,7 +223,33 @@ router.get('/getOrganisations',(req, res) => {
 });
 
 
-router.get('/getLocations',(req, res) => {
+router.post('/getLocations',(req, res) => {
+
+	// The Org to get Locations
+	var  orgId = req.body.orgId;
+
+	var locRef = db.ref("locations");
+	var returnJson = {
+		"locations":[]
+	};
+
+	locRef.orderByChild("orgId").equalTo(orgId).once("value",snap=>{
+		if (snap.val()) {
+			// Locations Exist
+			snap.forEach(single=>{
+				returnJson.locations.push({
+					locationId:single.val().locationId,
+					locationName:single.val().locationName
+
+				});
+			});
+			returnJson.status = 1;
+			res.send(returnJson);
+		}
+		else{
+			res.send({status:0});
+		}
+	});
 
     
 });
@@ -216,11 +258,63 @@ router.get('/getDepartments',(req, res) => {
     
 });
 
-router.get('/getDomains',(req, res) => {
-    
+
+// Since this page is visible only after selecting Department , need to query
+// the database with only deptId
+router.post('/getDomains',(req, res) => {
+
+	var locationId = req.body.locationId;
+	var orgId  = req.body.orgId;
+	var deptId = req.body.deptId;
+
+   var returnJson = {
+   	"domains":[]
+   };
+	var domainsRef = db.ref("domains");
+	domainsRef.orderByChild("deptId").equalTo(deptId).once("value",snap => {
+
+		if (s.val()) {
+			snap.forEach(s=>{
+			
+				// Value Exists matching deptId
+				returnJson.domains.push({
+						domainName:s.val().domainName,
+						domainId:s.val().domainId,
+						locationId:s.val().locationId,
+						orgId:s.val().orgId,
+						deptId:s.val().deptId
+				});
+			});
+
+			//Append operation Result
+			returnJson.status = 1;
+			res.send(returnJson);
+				//this is a alternative way of Filtering 
+				// if (s.val().locationId == locationId && s.val().orgId == orgId && s.val().deptId == deptId ){
+				// console.log("Match found");
+					
+		}
+		else{
+				// no match
+		 		// Do nothingc
+		 		res.send({status:0});
+			}
+		});
+		
+		
 });
 
-router.get('/getQuestions',(req, res) => {
+router.post('/getQuestions',(req, res) => {
+
+	var locationId = req.body.locationId;
+	var orgId  = req.body.orgId;
+	var deptId = req.body.deptId;
+	var domainId  = req.body.domainId;
+	var questionsRef = db.ref("questions");
+	questionsRef.orderByChild("domainId").equalTo(domainId).once("value",snap => {
+		res.send(snap.val());
+	});
+
     
 });
 
@@ -244,6 +338,7 @@ router.post('/editLocation',(req, res) => {
 
 	var locationId  = req.body.locationId;
 	var orgId =  req.body.orgId;
+	var orgRef = db.ref()
 	
     
 });
@@ -266,6 +361,9 @@ router.get('/editQuestion',(req, res) => {
 
 
 
+
+
+
 /*The API which savesQuestions*/
 
 router.post('/saveQuestion',(req, res) => {
@@ -279,44 +377,44 @@ router.post('/saveQuestion',(req, res) => {
 	var questionId = req.body.questionId;
 
 	// Querying by Question Id
-	questionRef.orderByChild("questionId").equalTo(questionId).once("child_added",snap=>{
+	questionRef.orderByChild("questionId").equalTo(questionId).once("value",snap=>{
 		// snap will have a single Ke
 		//Please see output using res.send(snap.val())
+		if (snap.val()) {
+			try{
 
-		try{
-
-
-			var questionPath = "questions/"+snap.key;
-    		var questionRef= db.ref(questionPath);
-    		// Loading the Question 
-		    questionRef.once("value",s=>{
-		    	// Buidl the Answer object
-		 	 var answerObj = {
+				snap.forEach(s=>{
+					var quesPath = "questions/"+s.key;
+					var quesRef = db.ref(quesPath);
+					var answerObj = {
 						"answers":{
 								option:req.body.option, // can be yes,no,partial
 								extraText:req.body.extraText, // textbox value
 								fileUrl:req.body.fileUrl, // attachement URL
 								critical:req.body.critical // critical/ not critical 
 						}
-				};
-				questionRef.update(answerObj,err => {
-					if (err) {
-						res.send({status:0});
-					}
-					else{
-						res.send({status:1});
-					}
+					};
+					quesRef.update(answerObj,err => {
+						if (err) {
+							res.send({status:0});
+						}
+						else{
+							res.send({status:1});
+						}
+					});
 				});
-		 	
-		 });
-
-
-		 // console.log("third : "+snap.ref.key);
+			// var questionRef= db.ref(questionPath);
 		
+			}
+			catch(e){
+				res.send({status:0});
+			}
 		}
-		catch(e){
-			console.log("Error "+e);
+		else{
+			res.send({status:0});
 		}
+
+	
 		 
 	});
 
