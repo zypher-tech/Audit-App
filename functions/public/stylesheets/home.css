@@ -1,5 +1,8 @@
 
 @media screen and (min-width: 1000px) {
+    #options {
+        display: none;
+    }
     #create_button {
         position: fixed;
         right: 48%;
@@ -15,6 +18,7 @@
     
     .welcome {
         text-align: center;
+        padding-top: 20px;
     }
     
     #header {
@@ -50,16 +54,66 @@
     #show-list {
         position: absolute;
         left: 40%;
-        padding: 10px;
+        padding: 17px;
+    }
+    
+    #admin-user {
+        position: absolute;
+        right: 0px;
+        padding: 17px;
     }
 }
 
 @media screen and (max-width: 999px)  {
     #create_button {
         position: fixed;
-        right: 0px;
-        bottom: 0px;
+        right: 15px;
+        bottom: 15px;
     }
     
-    #con
+    #content {
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+    
+    #header {
+        height: 100px;
+        position: fixed;
+        top: 0px;
+        width: 100%;
+    }
+    
+    #main {
+        padding: 15px;
+        overflow: auto;
+        height: auto;
+        background-color: cyan;
+    }
+    
+    #header-logo {
+        display: none;
+    }
+    
+    #admin-user {
+        display: none;
+    }
+    
+    #show-list, #options {
+        float: right;
+        margin-left: 10px;
+    }
+    
+    .welcome {
+        text-align: center;
+    }
+    
+    #admin-user {
+        width: auto;
+        position: fixed;
+        top: 80px;
+        right: 15px;
+        background-color: white;
+        border-radius: 1em;
+        box-shadow: 2px 2px 30px grey;
+    }
 }
