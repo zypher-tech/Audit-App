@@ -24,7 +24,7 @@ router.post('/createOrganisation', (req, res) => {
      var newOrg = {
 
 		orgName:req.body.name,
-		orgAdditionalInfo:req.body.info,
+		// orgAdditionalInfo:req.body.info,
 		orgId:Date.now()
 	};
 
@@ -66,7 +66,7 @@ router.post('/createOrganisation', (req, res) => {
 
 
   */
-router.get('/createLocation',(req, res) => {
+router.post('/createLocation',(req, res) => {
     	
     	var newLocation = {
     		locationId:Date.now(),
@@ -106,7 +106,7 @@ router.get('/createLocation',(req, res) => {
 
 
   */
-router.get('/createDepartment',(req, res) => {
+router.post('/createDepartment',(req, res) => {
     	var newDept = {
     		locationId:req.body.locationId,
     		orgId:req.body.orgId,
@@ -154,6 +154,23 @@ router.get('/createDepartment',(req, res) => {
 
 
 router.post('/createDomain',(req, res) => {
+	var newDomain = {
+		orgId:req.body.orgId,
+		locationId: req.body.locationId,
+		deptId:req.body.deptId,
+		domainId:Date.now(),
+		domainName:req.body.domainName
+	};
+	var domainRef = db.ref("domains");
+    	domainRef.push(newDomain,err => {
+    		if (err) {
+    			res.send({status:0});
+    		}
+    		else{
+    			newDomain.status = 1;
+    			res.send(newDomain);
+    		}
+    	});
     
 });
 
@@ -275,11 +292,49 @@ router.post('/saveQuestion',(req, res) => {
 	var questionRef  = db.ref("questions");
 
 	console.log("save question called");
-
+	// getting Question Id
 	var questionId = req.body.questionId;
-	questionRef.orderByChild("questionId").equalTo(questionId).once("value",snap=>{
-		console.log("isnide callback");
-		 res.send(snap.val());
+
+	// Querying by Question Id
+	questionRef.orderByChild("questionId").equalTo(questionId).once("child_added",snap=>{
+		// snap will have a single Ke
+		//Please see output using res.send(snap.val())
+
+		try{
+
+
+			var questionPath = "questions/"+snap.key;
+    		var questionRef= db.ref(questionPath);
+    		// Loading the Question 
+		    questionRef.once("value",s=>{
+		    	// Buidl the Answer object
+		 	 var answerObj = {
+						"answers":{
+								option:req.body.option, // can be yes,no,partial
+								extraText:req.body.extraText, // textbox value
+								fileUrl:req.body.fileUrl, // attachement URL
+								critical:req.body.critical // critical/ not critical 
+						}
+				};
+				questionRef.update(answerObj,err => {
+					if (err) {
+						res.send({status:0});
+					}
+					else{
+						res.send({status:1});
+					}
+				});
+		 	
+		 });
+
+
+		 // console.log("third : "+snap.ref.key);
+		
+		}
+		catch(e){
+			console.log("Error "+e);
+		}
+		 
 	});
 
 
@@ -315,6 +370,8 @@ router.post('/saveQuestion',(req, res) => {
  //    		}
 
  //    });
+	
+	
 
     
 });
