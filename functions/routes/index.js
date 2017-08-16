@@ -4,30 +4,42 @@ const firebase=require('firebase-admin');
 const app=express();
 var router = express.Router();
 var db = firebase.database();
+const cors = require('cors')({origin: true});
 
 
-router.get('/',(req,res)=>{
+router.get('/home',(req,res)=>{
     res.render('home');
 });
 
 
 
 
+// @deepak please use variables names properly ,
+
+
 
 
 router.post('/createOrganisation', (req, res) => {
-     var organization={
+
+     var newOrg = {
+
 		orgName:req.body.name,
 		orgAdditionalInfo:req.body.info,
-		id:Date.now()
+		orgId:Date.now()
 	};
-	var orgRef = db.ref("/organization");
-	orgRef.push(organization,err => {
+
+	var orgRef = db.ref("organisation");
+	orgRef.push(newOrg,err => {
 		if (err) {
-			res.send({status:0});
+			res.set('Access-Control-Allow-Origin', "*")
+  			res.set('Access-Control-Allow-Methods', 'GET, POST')
+			res.status(200).send({status:0});
 		}
 		else{
-			res.send(organization);
+	  	  	res.set('Access-Control-Allow-Origin', "*")
+	  		res.set('Access-Control-Allow-Methods', 'GET, POST')
+	  		newOrg.status = 1;
+			res.status(200).send(newOrg);
 		}
 	});
 
@@ -37,7 +49,7 @@ router.post('/createOrganisation', (req, res) => {
 
 /*Create New Location for a organisation.
 	input
-	 		{		
+	 		{		jabberwock12
 	 				"orgId":4,
 					"locationName": "Bang-1"
 				
@@ -56,9 +68,21 @@ router.post('/createOrganisation', (req, res) => {
   */
 router.get('/createLocation',(req, res) => {
     	
-    	// newLocation = {
-    	// 	orgId:
-    	// };
+    	var newLocation = {
+    		locationId:Date.now(),
+    		orgId:req.body.orgId,
+    		locationName: req.body.locationName,
+    	};
+
+    	var locationRef = db.ref("locations");
+    	locationRef.push(newLocation,err => {
+    		if (err) {
+    			res.send({status:0});
+    		}
+    		else{
+    			res.send(newLocation);
+    		}
+    	});
 });
 
 
@@ -83,7 +107,23 @@ router.get('/createLocation',(req, res) => {
 
   */
 router.get('/createDepartment',(req, res) => {
-    
+    	var newDept = {
+    		locationId:req.body.locationId,
+    		orgId:req.body.orgId,
+    		locationName: req.body.locationName,
+    		departmentName:req.body.departmentName
+    	};
+
+    	var departmentRef = db.ref("detpartments");
+    	departmentRef.push(newDept,err => {
+    		if (err) {
+    			res.send({status:0});
+    		}
+    		else{
+    			newDept.status = 1;
+    			res.send(newDept);
+    		}
+    	});
 });
 
 
@@ -122,11 +162,28 @@ router.get('/createQuestion',(req, res) => {
 });
 
 router.get('/getOrganisations',(req, res) => {
+
+
+	var returnJson = {
+		"orgs":[]
+	}
+	var orgRef = db.ref("oranization");
+	orgRef.once("value",snap => {
+			snap.forEach(s=>{
+				returnJson.orgs.push({
+					id:s.val().id,
+					name:s.val().name
+
+				});
+			});
+			res.send(returnJson);
+	});
     
 });
 
 
 router.get('/getLocations',(req, res) => {
+
     
 });
 
@@ -144,11 +201,25 @@ router.get('/getQuestions',(req, res) => {
 
 
 router.get('/editOrgansation',(req, res) => {
+
+	var orgId = req.body.orgId;
+	var newName = req.body.newName;
+	var orgRef  = db.ref("organization");
+	orgRef.orderByChild("id").equalTo(orgId).once("value",snap => {
+		  
+		  console.log("Organisation Name to Edit "+snap.val().id);
+
+			
     
+	});
 });
 
 
 router.get('/editLocation',(req, res) => {
+
+	var locationId  = req.body.locationId;
+	var orgId =  req.body.orgId;
+	
     
 });
 
@@ -234,33 +305,13 @@ router.get('/Questions',(req, res) => {
 });
 
 
-router.get('/exportDomain',(req, res) => {
+router.get('/export',(req, res) => {
+				  		
   		
-  		var orgId  = req.body.orgId;
-  		var locationId  = req.body.locationId;
-  		var deptId = req.body.deptId;
-  		var domainId = req.body.domainId;
-
-  		// Query the Questions Collections with the Following Params
-  		var questionsRef = db.ref("questions");
-  		// questionsRef.orderBychild("orgId");
-
-  		/*HTML send home*/
-});
-router.get('/exportDepartment',(req, res) => {
-  		
-  		var orgId = req.body.deptId;
-  		var deptId = req.body.deptId;
-  		
-  		/*HTML send home*/
-});
 
 
-router.get('/exportLocation',(req, res) => {
-  		
-  		var locationId = req.body.deptId;
-  		
-  		/*HTML send home*/
+  		var orgId = req.body.orgId;
+
 });
 
 
