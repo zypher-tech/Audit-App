@@ -1,3 +1,7 @@
+
+//gets the organizations
+var link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getOrganisations';
+
 $('#options').click(function(){
     $('#admin-user').toggle();
 });
@@ -9,12 +13,29 @@ $('#orgs').click(function(){
     var isVisible = list.is(':visible');
     
     if (isVisible) {
-        //add the getorganizations list calling function here
+        $.ajax({
+            headers : {
+                'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            url: link,
+            dataType: 'json',
+            success: function(res) {
+                $('.loading').remove();
+                $('.list-item').remove();
+                for(var i=0; i< res.orgs.length; i++) {
+                    var org = res.orgs[i];
+                    $('#list-items').append(
+                        '<div class="list-item"><h2>'+org.name+'</h2><br>id: '+org.id+'</div>'
+                    );
+                }
+            },
+            error: function(){alert('Error retrieving data. Please try again later.');}
+        });
     }
 });
 
-$('#submitOrgName').click(function(e){
-    var input = $('#orgname').val();
+$('#submitName').click(function(e){
+    var input = $('#name').val();
     console.log(input);
     
     //call createOrganization method
