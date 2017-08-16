@@ -12,3 +12,10 @@ $('#orgs').click(function(){
         //add the getorganizations list calling function here
     }
 });
+
+$('#submitOrgName').click(function(e){
+    var input = $('#orgname').val();
+    console.log(input);
+    
+    //call createOrganization method
+});
