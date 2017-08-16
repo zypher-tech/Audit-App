@@ -153,11 +153,36 @@ router.get('/createDepartment',(req, res) => {
 
 
 
-router.get('/createDomain',(req, res) => {
+router.post('/createDomain',(req, res) => {
     
 });
 
-router.get('/createQuestion',(req, res) => {
+router.post('/createQuestion',(req, res) => {
+
+	var newQuestion = {
+		questionText : req.body.questionText,
+		orgId:req.body.orgId,
+		locationId: req.body.locationId,
+		deptId:req.body.deptId,
+		domainId:req.body.domainId,
+		questionId:Date.now()
+	};  
+	var questionRef = db.ref("questions");
+	questionRef.push(newQuestion,err => {
+
+    		if (err) {
+    			res.set('Access-Control-Allow-Origin', "*");
+  				res.set('Access-Control-Allow-Methods', 'GET, POST');
+				res.status(200).send({status:0});
+    		}
+    		else{
+    			res.set('Access-Control-Allow-Origin', "*");
+  				res.set('Access-Control-Allow-Methods', 'GET, POST');
+  				newQuestion.status = 1;
+				res.status(200).send(newQuestion);
+    		}
+
+    });
     
 });
 
@@ -200,7 +225,7 @@ router.get('/getQuestions',(req, res) => {
 });
 
 
-router.get('/editOrgansation',(req, res) => {
+router.post('/editOrgansation',(req, res) => {
 
 	var orgId = req.body.orgId;
 	var newName = req.body.newName;
@@ -215,7 +240,7 @@ router.get('/editOrgansation',(req, res) => {
 });
 
 
-router.get('/editLocation',(req, res) => {
+router.post('/editLocation',(req, res) => {
 
 	var locationId  = req.body.locationId;
 	var orgId =  req.body.orgId;
@@ -224,7 +249,7 @@ router.get('/editLocation',(req, res) => {
 });
 
 
-router.get('/editDepartment',(req, res) => {
+router.post('/editDepartment',(req, res) => {
     
 });
 
@@ -239,34 +264,57 @@ router.get('/editQuestion',(req, res) => {
 
 
 
+
+
 /*The API which savesQuestions*/
 
-router.get('/saveQuestion',(req, res) => {
+router.post('/saveQuestion',(req, res) => {
 
 	//Get all the Variabels regarding to Question
 
 	var questionRef  = db.ref("questions");
 
-		//Construct the Object to push to Questions Collections
-	var questionObj = {
-		orgId:req.body.orgId,
-		locationId: req.body.locationId,
-		deptId:req.body.deptId,
-		domainId:req.body.domainId,
-		questionText:req.body.questionText
-	};
+	console.log("save question called");
+
+	var questionId = req.body.questionId;
+	questionRef.orderByChild("questionId").equalTo(questionId).once("value",snap=>{
+		console.log("isnide callback");
+		 res.send(snap.val());
+	});
+
+
+
+
+
+	// 	//Construct the Object to push to Questions Collections
+	// var questionObj = {
+	// 	orgId:req.body.orgId,
+	// 	questionId:Date.now(),
+	// 	locationId: req.body.locationId,
+	// 	deptId:req.body.deptId,
+	// 	domainId:req.body.domainId,
+	// 	questionText:req.body.questionText,
+	// 	option:req.body.option,
+	// 	extraText:req.body.extraText,
+	// 	fileUrl :req.body.fileUrl,
+	// 	critical:req.body.critical
+	// };
     
-    var newQuestionRef = questionsRef.push(questionObj,err => {
+ //    var newQuestionRef = questionsRef.push(questionObj,err => {
 
-    		if (err) {
-    			console.log("Error Pushing");
-    		}
-    		else{
-    			var questionId = newQuestionRef.key;
-   			    console.log("Question Inserted at "+questionId);
-    		}
+ //    		if (err) {
+ //    			res.set('Access-Control-Allow-Origin', "*")
+ //  				res.set('Access-Control-Allow-Methods', 'GET, POST')
+	// 			res.status(200).send({status:0});
+ //    		}
+ //    		else{
+ //    			res.set('Access-Control-Allow-Origin', "*")
+ //  				res.set('Access-Control-Allow-Methods', 'GET, POST')
+ //  				questionObj.status = 1;
+	// 			res.status(200).send(questionObj);
+ //    		}
 
-    });
+ //    });
 
     
 });
