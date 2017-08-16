@@ -1,5 +1,11 @@
 
 @media screen and (min-width: 1000px) {
+    #nav-bar {
+        padding: 10px;
+        background-color: blanchedalmond;
+        margin-top: 80px;
+    }
+    
     .loading {
         position: absolute; 
         top: 50%; 
@@ -74,6 +80,10 @@
 }
 
 @media screen and (max-width: 999px)  {
+    #nav-bar {
+        padding: 13px;
+    }
+    
     #list-items {
         padding: 10px;
     }

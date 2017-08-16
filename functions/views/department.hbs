@@ -45,7 +45,7 @@
     <!--main content-->
     <div id="content">
         <div id="nav-bar">
-            <a href="home.hbs">Organizations</a> &nbsp; <span></span>
+            <a href="home.hbs">Organizations</a> &nbsp; / &nbsp; <a href="location.hbs">Locations</a> &nbsp; <span></span>
         </div>
         <div id="list-items">
             <!--list of organizations would go here-->
@@ -91,7 +91,7 @@
     <!--jQuery imported-->
     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
-        var page_name = 'Location';
+        var page_name = 'Department';
         $('#modal_title').append(page_name);
         $('#placeho').prepend(page_name);
         $('#show-list span').text(page_name);
@@ -99,6 +99,6 @@
         $('#nav-bar span').html('/ &nbsp;' + page_name);
     </script>
     <!--JavaScript file imported-->
-    <script src = "scripts/location.js"></script>
+    <script src = "scripts/department.js"></script>
 </body>
 </html>
