@@ -27,7 +27,7 @@ $('#orgs').click(function(){
                 for(var i=0; i< res.orgs.length; i++) {
                     var org = res.orgs[i];
                     $('#list-items').append(
-                        '<div class="list-item"><h2>'+org.name+'</h2><br>id: '+org.id+'</div>'
+                        '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></a>'
                     );
                 }
             },
@@ -36,14 +36,32 @@ $('#orgs').click(function(){
     }
 });
 
-$('#submitName').click(function(e){
+$('#submitName').click(function(){
     var input = $('#orgname').val();
-    console.log(input);
     if (input.split('').length != 0) {
+        console.log(input.split('').length);
+        console.log(input);
         //call createOrganization method
-        $.post(createLink, input, function(result){
-            console.log(result);
-        });
+        //$.post(createLink, input, function(result){
+          //  console.log(result);
+        //});
+        
+        $.ajax({
+            type: "POST",
+                url: createLink,
+                data: input,
+                dataType: "json",
+
+                success: function(data) {
+                    $('body').append('<div class="success"><p>Org successfully created!</p></div>')
+                    setTimeout(function(){
+                        $('.success').hide();
+                    }, 2000);
+                },
+                error: function(data){
+                alert("Try again later!");
+                }
+            });
     }
 });
 

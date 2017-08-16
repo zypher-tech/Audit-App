@@ -1,0 +1,12 @@
+[debug] [2017-08-16T14:16:30.093Z] ----------------------------------------------------------------------
+[debug] [2017-08-16T14:16:30.097Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\deepak\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase deploy
+[debug] [2017-08-16T14:16:30.097Z] CLI Version:   3.9.2
+[debug] [2017-08-16T14:16:30.097Z] Platform:      win32
+[debug] [2017-08-16T14:16:30.097Z] Node Version:  v6.11.2
+[debug] [2017-08-16T14:16:30.097Z] Time:          Wed Aug 16 2017 19:46:30 GMT+0530 (India Standard Time)
+[debug] [2017-08-16T14:16:30.097Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-08-16T14:16:30.109Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-08-16T14:16:30.109Z] > authorizing via signed-in user
+[debug] [2017-08-16T14:16:30.109Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/audit-app-819d8  
+ Wed Aug 16 2017 19:46:30 GMT+0530 (India Standard Time)

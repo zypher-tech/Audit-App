@@ -45,7 +45,7 @@
     <!--main content-->
     <div id="content">
         <div id="nav-bar">
-            <a href="home.hbs">Organizations</a> &nbsp; / &nbsp; <a href="location.hbs">Locations</a> &nbsp; <span></span>
+            
         </div>
         <div id="list-items">
             <!--list of organizations would go here-->
@@ -63,8 +63,8 @@
             </div>           
         </div>
         <div class="mdl-dialog__actions">
-          <button type="button" class="mdl-button" id="submitName">Submit</button>
-          <button type="button" class="mdl-button close">Close</button>
+          <button type="button" class="mdl-button close" id="submitName">Submit</button>
+          <button type="button" class="mdl-button" id="close">Close</button>
         </div>
     </dialog>
     
@@ -86,6 +86,10 @@
         dialog.querySelector('.close').addEventListener('click', function() {
           dialog.close();
         });
+        
+        dialog.querySelector('#close').addEventListener('click', function() {
+          dialog.close();
+        });
     </script>
     
     <!--jQuery imported-->
@@ -96,7 +100,6 @@
         $('#placeho').prepend(page_name);
         $('#show-list span').text(page_name);
         $('title').text(page_name);
-        $('#nav-bar span').html('/ &nbsp;' + page_name);
     </script>
     <!--JavaScript file imported-->
     <script src = "scripts/department.js"></script>

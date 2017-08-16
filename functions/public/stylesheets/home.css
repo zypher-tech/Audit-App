@@ -6,6 +6,15 @@
         left: 450px;
     }
     
+    .success {
+        background-color: white;
+        position: fixed;
+        left: 40%;
+        top: 200px;
+        padding: 30px;
+        box-shadow: 3px 3px 10px black;
+    }
+    
     #list-items {
         display: none;
         padding-top: 30px;
@@ -83,6 +92,15 @@
     #list-items {
         padding: 10px;
         display: none;
+    }
+    
+    .success {
+        background-color: white;
+        position: fixed;
+        left: 20%;
+        top: 200px;
+        padding: 30px;
+        box-shadow: 3px 3px 10px black;
     }
     
     .loading {
