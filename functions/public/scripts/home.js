@@ -22,7 +22,6 @@ $('#orgs').click(function(){
         list.toggle();
     }
     
-    if (isVisible) {
         $.ajax({
             headers : {
                 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -41,7 +40,6 @@ $('#orgs').click(function(){
             },
             error: function(){alert('Error retrieving data. Please try again later.');}
         });
-    }
 });
 
 $('#submitName').click(function(){
