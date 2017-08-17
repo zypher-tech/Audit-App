@@ -434,7 +434,7 @@ router.post('/createAudit',(req,res) => {
 
 
 
-router.post('/getAudits',(req,res)=>{
+router.get('/getAudits',(req,res)=>{
    
   	    var orgId = req.body.orgId;
 		var locationId = req.body.locationId;
