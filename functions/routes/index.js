@@ -13,6 +13,12 @@ router.get('/home',(req,res)=>{
 
 
 
+router.get('/dash',(req,res)=>{
+    res.render('dashboard');
+});
+
+
+
 
 // @deepak please use variables names properly ,
 
@@ -376,6 +382,9 @@ router.post('/editLocation',(req, res) => {
 	
     
 });
+
+
+
 
 
 router.post('/editDepartment',(req, res) => {
