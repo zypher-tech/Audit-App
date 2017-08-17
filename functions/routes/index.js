@@ -21,25 +21,25 @@ router.get('/home',(req,res)=>{
 
 router.post('/createOrganisation', (req, res) => {
 
+	console.log("Called Crate organisation");
+
+
+	var newOrg = {
+		orgName:req.body.orgName,
+		orgId:Date.now()
+	};
+
 
 	var orgRef = db.ref("organisation");
-	orgRef.once("value",snap => {
-		var count = snap.numChildren()+1;
-    	 var newOrg = {
-			orgName:req.body.name,
-			// orgAdditionalInfo:req.body.info,
-			orgId:count
-		};
-		orgRef.child(count).set(newOrg,err => {
-			if (err) {
-				res.send({status:0});
-			}
-			else{
-
-			    newOrg.status = 1;
-				res.send(newOrg);
-			}
-		});
+	orgRef.push(newOrg,err => { 
+		console.log("Something happend");
+		if (err) {
+			res.send({status:0});
+		}
+		else{
+			newOrg.status = 1;
+			res.send(newOrg)
+		}
 	});
 });
 

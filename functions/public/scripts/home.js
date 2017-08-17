@@ -47,25 +47,28 @@ $('#orgs').click(function(){
 $('#submitName').click(function(){
     var input = $('#orgname').val();
     if (input.split('').length != 0) {
-        console.log(input.split('').length);
-        console.log(input);
-        //call createOrganization method
-        //$.post(createLink, input, function(result){
-          //  console.log(result);
-        //});
+       var reqBody = JSON.stringify({orgName:input});
+       console.log("sending Body"+reqBody);
         
         $.ajax({
-            type: "POST",
+               type: "POST",
                 url: createLink,
-                data: input,
+                data: reqBody,
                 dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+
 
                 success: function(data) {
                     if (data.status == 1) {
+                        console.log("Good status");
                         $('body').append('<div class="success"><p>Org successfully created!</p></div>')
                         setTimeout(function(){
                             $('.success').hide();
                         }, 2000);
+                          $('#list-items').append(
+                        '<a href="location.hbs?orgid='+data.orgId+'"><div class="list-item"><h2>'+data.orgName+'</h2></div></a>'
+                         );
+
                     } else if(data.status == 0) {
                         $('body').append('<div class="success"><p>Organization creation unsuccessful!</p></div>')
                         setTimeout(function(){
@@ -74,7 +77,7 @@ $('#submitName').click(function(){
                     }
                 },
                 error: function(data){
-                alert("Try again later!");
+                alert("Try again later!"+data.cod);
                 }
             });
     }
