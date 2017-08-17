@@ -27,7 +27,7 @@ $('#orgs').click(function(){
                 for(var i=0; i< res.orgs.length; i++) {
                     var org = res.orgs[i];
                     $('#list-items').append(
-                        '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></a>'
+                        '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
                     );
                 }
             },
@@ -53,10 +53,17 @@ $('#submitName').click(function(){
                 dataType: "json",
 
                 success: function(data) {
-                    $('body').append('<div class="success"><p>Org successfully created!</p></div>')
-                    setTimeout(function(){
-                        $('.success').hide();
-                    }, 2000);
+                    if (data.status == 1) {
+                        $('body').append('<div class="success"><p>Org successfully created!</p></div>')
+                        setTimeout(function(){
+                            $('.success').hide();
+                        }, 2000);
+                    } else if(data.status == 0) {
+                        $('body').append('<div class="success"><p>Organization creation unsuccessful!</p></div>')
+                        setTimeout(function(){
+                            $('.success').hide();
+                        }, 2000);
+                    }
                 },
                 error: function(data){
                 alert("Try again later!");

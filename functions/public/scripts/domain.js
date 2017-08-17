@@ -1,6 +1,6 @@
-link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getDepartments';
+link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getDomains';
 
-var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createDepartment';
+var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createDomain';
 
 
 var urlParams = new URLSearchParams(window.location.search);
@@ -28,11 +28,11 @@ $.ajax({
     success: function(res) {
         $('.loading').remove();
         $('.list-item').remove();
-        for(var i=0; i< res.departments.length; i++) {
-            var deps = res.departments[i];
+        for(var i=0; i< res.domains.length; i++) {
+            var doms = res.domains[i];
             //display list of location filtering using orgid
             $('#list-items').append(
-                '<a href="domain.hbs?locationId='+req.locationId+'&orgId'+req.orgId+'&deptId='+deps.deptId+'"><div class="list-item"><h2>'+deps.departmentName+'</h2></div></a>'
+                '<a href="questions.hbs?locationId='+req.locationId+'&orgId'+req.orgId+'&deptId='+req.deptId+'&domainId='+doms.domainId+'"><div class="list-item"><h2>'+doms.domainName+'</h2></div></a>'
             );
         }
     },
@@ -61,12 +61,12 @@ $('#submitName').click(function(){
 
                 success: function(data) {
                     if (data.status == 1) {
-                        $('body').append('<div class="success"><p>Department successfully created!</p></div>')
+                        $('body').append('<div class="success"><p>Domain successfully created!</p></div>')
                         setTimeout(function(){
                             $('.success').hide();
                         }, 2000);
                     } else if(data.status == 0) {
-                        $('body').append('<div class="success"><p>Department creation unsuccessful!</p></div>')
+                        $('body').append('<div class="success"><p>Domain creation unsuccessful!</p></div>')
                         setTimeout(function(){
                             $('.success').hide();
                         }, 2000);
@@ -78,4 +78,3 @@ $('#submitName').click(function(){
             });
     }
 });
-
