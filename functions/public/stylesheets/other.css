@@ -6,6 +6,12 @@
         margin-top: 80px;
     }
     
+    #show-list > span {
+        position: absolute;
+        top: 25px;
+        right: 270px
+    }
+    
     .loading {
         position: absolute; 
         top: 50%; 
@@ -86,6 +92,12 @@
     
     #list-items {
         padding: 10px;
+    }
+    
+    #show-list > span {
+        position: absolute;
+        top: 16px;
+        left: 10px;
     }
     
     .loading {

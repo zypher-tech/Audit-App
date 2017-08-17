@@ -34,10 +34,7 @@
                 </button>
             </div>
             <div id="show-list">
-                <span style="padding: 20px;"></span>
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="dash">
-                  DASHBOARD
-                </button>
+                <span></span>
             </div>
         </div>
     </div>
@@ -98,8 +95,8 @@
         var page_name = 'Domain';
         $('#modal_title').append(page_name);
         $('#placeho').prepend(page_name);
-        $('#show-list span').text(page_name);
-        $('title').text(page_name);
+        $('#show-list span').text(page_name + 's');
+        $('title').text(page_name + 's');
         
         function goBack() {
             window.history.back();
