@@ -35,10 +35,15 @@ $('#orgs').click(function(){
                 $('.list-item').remove();
                 for(var i=0; i< res.orgs.length; i++) {
                     var org = res.orgs[i];
+                    var id = i;
+                    var newDiv = '<div class="list-item id ='+i+'"><h2>'+org.name+'</h2></div></a>';
                     $('#list-items').append(
-                        '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
-                    );
-                }
+                        newDiv  // '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
+                    );  
+                };
+                 $('#list-items').on('click', function(e){
+                        alert("Clicked "+e);
+                });
             },
             error: function(){alert('Error retrieving data. Please try again later.');}
         });
@@ -66,8 +71,9 @@ $('#submitName').click(function(){
                             $('.success').hide();
                         }, 2000);
                           $('#list-items').append(
-                        '<a href="location.hbs?orgid='+data.orgId+'"><div class="list-item"><h2>'+data.orgName+'</h2></div></a>'
+                                '<a href = "location.hbs?orgid='+data.orgId+'"><div class="list-item"><h6>'+data.orgName+'</h6></div></a>'
                          );
+
 
                     } else if(data.status == 0) {
                         $('body').append('<div class="success"><p>Organization creation unsuccessful!</p></div>')
