@@ -19,6 +19,9 @@ router.get('/home',(req,res)=>{
 
 
 
+// Working
+
+
 router.post('/createOrganisation', (req, res) => {
 
 	console.log("Called Crate organisation");
@@ -64,6 +67,8 @@ router.post('/createOrganisation', (req, res) => {
 
 
   */
+
+  // Working
 router.post('/createLocation',(req, res) => {
     	
     	var newLocation = {
@@ -104,12 +109,14 @@ router.post('/createLocation',(req, res) => {
 
 
   */
+
+  // Working
 router.post('/createDepartment',(req, res) => {
     	var newDept = {
     		locationId:req.body.locationId,
     		orgId:req.body.orgId,
-    		locationName: req.body.locationName,
-    		departmentName:req.body.departmentName
+    		departmentName:req.body.departmentName,
+    		deptId:Date.now()
     	};
 
     	var departmentRef = db.ref("detpartments");
@@ -255,9 +262,9 @@ router.post('/getLocations',(req, res) => {
     
 });
 
-router.get('/getDepartments',(req, res) => {
+router.post('/getDepartments',(req, res) => {
     	var locationId = req.body.locationId;
-    	var departmentRef = db.ref("department");
+    	var departmentRef = db.ref("detpartments");
     	var returnJson = {
     		"department":[]
     	};
@@ -300,8 +307,8 @@ router.post('/getDomains',(req, res) => {
 	// Query with departmentId
 	domainsRef.orderByChild("deptId").equalTo(deptId).once("value",snap => {
 
-		if (s.val()) {
-			snap.forEach(s=>{
+		if (snap.val()) {
+			snap.forEach(s=> {
 			
 				// Value Exists matching deptId
 				returnJson.domains.push({
@@ -494,6 +501,7 @@ router.post('/saveAnswer',(req, res) => {
 
 	auditsRef.push(newAuditForQuestion,err=>{
 		if (err) {
+
 			res.send({status:0});
 		}
 		else {
