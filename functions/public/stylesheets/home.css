@@ -99,6 +99,11 @@
         display: none;
     }
     
+    #dashboard {
+        display: none;
+        padding-top: 10px;
+    }
+    
     .success {
         background-color: white;
         position: fixed;
