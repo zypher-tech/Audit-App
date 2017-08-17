@@ -486,10 +486,10 @@ router.post('/saveAnswer',(req, res) => {
 		deptId:req.body.deptId,
 		domainId:req.body.domainId,
 		questionText:req.body.questionText,
-	 	option:req.body.option,
-		extraText:req.body.extraText,
-		fileUrl :req.body.fileUrl,
-		critical:req.body.critical
+	 	option:req.body.option,                 // yes or No Radio bUtto n
+		extraText:req.body.extraText,              // TextBox 
+		fileUrl :req.body.fileUrl,                //Attachement URL
+		critical:req.body.critical      // Critical or not critical  btton
 	};
 
 	auditsRef.push(newAuditForQuestion,err=>{
@@ -539,6 +539,7 @@ router.post('/saveAnswer',(req, res) => {
  //    		}
 
  //    });
+
 
 
 
