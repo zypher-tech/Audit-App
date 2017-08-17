@@ -12,9 +12,6 @@ functions.config().firebase
 );
 
 const engines=require('consolidate');
-
-
-
 var index = require('./routes/index');
 
 const app=express();

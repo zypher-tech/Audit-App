@@ -256,7 +256,29 @@ router.post('/getLocations',(req, res) => {
 });
 
 router.get('/getDepartments',(req, res) => {
-    
+    	var locationId = req.body.locationId;
+    	var departmentRef = db.ref("department");
+    	var returnJson = {
+    		"department":[]
+    	};
+
+    	departmentRef.orderByChild("locationId").equalTo(locationId).once("value",snap=>{
+    		if (snap.val()) {
+    			snap.forEach(s=>{
+    				returnJson.department.push({
+    					deptId:s.val().deptId,
+    					departmentName:s.val().departmentName
+    				});
+    			});
+    			returnJson.status = 1;
+ 		   		res.send(returnJson);
+
+    			
+    		}
+    		else{
+    			res.send({status:0});
+    		}
+    	});
 });
 
 
@@ -268,10 +290,14 @@ router.post('/getDomains',(req, res) => {
 	var orgId  = req.body.orgId;
 	var deptId = req.body.deptId;
 
+	// we have Domain Id 
+
    var returnJson = {
    	"domains":[]
    };
 	var domainsRef = db.ref("domains");
+
+	// Query with departmentId
 	domainsRef.orderByChild("deptId").equalTo(deptId).once("value",snap => {
 
 		if (s.val()) {
@@ -358,66 +384,127 @@ router.get('/editQuestion',(req, res) => {
 });
 
 
+router.post('/genByLocation',(req, res) => {
+
+	// The location to Query the Database
+	var locationId = req.body.locationId;
+    
+});
+router.post('/genByDept',(req, res) => {
+	var deptId = req.body.deptId;
+    
+});
+router.post('/genByDomain',(req, res) => {
+    	var domainId = req.body.domainId;
+});
 
 
 
+
+
+router.post('/createAudit',(req,res) => {
+		var auditDate = req.body.date;
+		var auditName = req.body.auditName;
+		var orgId = req.body.orgId;
+		var locationId = req.body.locationId;
+		var deptId = req.body.deptId;
+		var domainId = req.body.domainId;
+
+		var auditsRef = db.ref("audits");
+		var newAudit = {
+		   auditDate:auditDate,
+		   auditId:Date.now(),
+		   orgId:orgId,
+		   auditName:auditName,
+		   locationId:locationId,
+		   deptId:deptId,
+		   domainId:domainId
+		};
+		auditsRef.push(newAudit,err=>{
+			if (err) {
+				res.send({status:0});
+			}
+			else{
+				newAudit.status = 1;
+				res.send(newAudit);
+			}
+		})
+});
+
+
+
+
+router.post('/getAudits',(req,res)=>{
+   
+  	    var orgId = req.body.orgId;
+		var locationId = req.body.locationId;
+		var deptId = req.body.deptId;
+		var domainId = req.body.domainId;
+		var auditRef = db.ref("audits");
+		var returnJson = {
+			"audits":[]
+		};
+		auditRef.orderByChild("domainId").equalTo(domainId).once("value",snap => {
+			if (snap.val()) {
+				snap.forEach(s=>{
+						returnJson.audits.push({
+							auditId:s.val().auditId,
+							auditName:s.val().auditName
+					});
+				});
+				returnJson.status = 1;
+				res.send(returnJson);
+					
+			}
+			else{
+				res.send({status:0});
+			}
+		});
+
+});
 
 
 
 
 /*The API which savesQuestions*/
 
-router.post('/saveQuestion',(req, res) => {
+router.post('/saveAnswer',(req, res) => {
 
 	//Get all the Variabels regarding to Question
 
 	var questionRef  = db.ref("questions");
-
-	console.log("save question called");
-	// getting Question Id
+	var auditId = req.body.auditId;
+    
+    // The Question Which was saved, save button has been pressed
 	var questionId = req.body.questionId;
+	var auditsRef = db.ref("audits");
+	var newAuditForQuestion = {
+		orgId:req.body.orgId,
+		auditId:auditId,
+		questionId:questionId,
+		locationId: req.body.locationId,
+		deptId:req.body.deptId,
+		domainId:req.body.domainId,
+		questionText:req.body.questionText,
+	 	option:req.body.option,
+		extraText:req.body.extraText,
+		fileUrl :req.body.fileUrl,
+		critical:req.body.critical
+	};
 
-	// Querying by Question Id
-	questionRef.orderByChild("questionId").equalTo(questionId).once("value",snap=>{
-		// snap will have a single Ke
-		//Please see output using res.send(snap.val())
-		if (snap.val()) {
-			try{
-
-				snap.forEach(s=>{
-					var quesPath = "questions/"+s.key;
-					var quesRef = db.ref(quesPath);
-					var answerObj = {
-						"answers":{
-								option:req.body.option, // can be yes,no,partial
-								extraText:req.body.extraText, // textbox value
-								fileUrl:req.body.fileUrl, // attachement URL
-								critical:req.body.critical // critical/ not critical 
-						}
-					};
-					quesRef.update(answerObj,err => {
-						if (err) {
-							res.send({status:0});
-						}
-						else{
-							res.send({status:1});
-						}
-					});
-				});
-			// var questionRef= db.ref(questionPath);
-		
-			}
-			catch(e){
-				res.send({status:0});
-			}
-		}
-		else{
+	auditsRef.push(newAuditForQuestion,err=>{
+		if (err) {
 			res.send({status:0});
 		}
+		else {
+			newAuditForQuestion.status = 1;
+			res.send(newAuditForQuestion);
+		}
+	});
 
 	
 		 
-	});
+});
 
 
 
@@ -452,56 +539,72 @@ router.post('/saveQuestion',(req, res) => {
  //    		}
 
  //    });
-	
-	
 
-    
+
+
+
+
+
+
+
+
+router.post('/generateByDomain',(req, res) => {
+
+	var domainId = req.body.domainId;
+	var auditId = req.body.auditId;
+	var auditsRef = db.ref("audits");
+	var criticalCount = 0 ;
+	var notCriticalCount = 0;
+	var yesCount = 0;
+	var noCount = 0;
+	var partialCount =0;
+	var returnJson = {
+
+	};
+	auditsRef.orderByChild("auditId").equalTo(auditId).once("value",snap =>{
+		console.log("Inside Audit Filtered Callback");
+
+		// we have to return how mayn yes or no 
+		// how many critical or not critical
+		if (snap.val()) {
+
+				snap.forEach(s => {
+					// we have list of Audits of september
+						if (s.val().critical==1) {
+							criticalCount ++;
+
+						}
+						else{
+							notCriticalCount++;
+						}
+						
+						switch(s.val().option){
+							case 0:
+								yesCount++;
+								break;
+							case 1:
+								noCount++;
+								break;
+							case 2:
+								partialCount++;
+								break;
+							default:
+								break;
+						};
+				});
+				returnJson.criticalCount = criticalCount;
+				returnJson.yesCount =  yesCount;
+				returnJson.noCount = noCount;
+				returnJson.partialCount = partialCount;
+				returnJson.status = 1;
+				res.send(returnJson);
+		}
+		else{
+			res.send({status:0});
+		}
+
+	});
 });
-
-
-
-
-
-router.get('/home',(req, res) => {
-  		
-  		/*HTML send home*/
-});
-
-
-router.get('/Locations',(req, res) => {
-  		
-  		/*HTML send home*/
-});
-
-
-router.get('/Departments',(req, res) => {
-  		
-  		/*HTML send home*/
-});
-
-
-router.get('/Domain',(req, res) => {
-  		
-  		/*HTML send home*/
-});
-
-
-router.get('/Questions',(req, res) => {
-  		
-  		/*HTML send home*/
-});
-
-
-router.get('/export',(req, res) => {
-				  		
-  		
-
-
-  		var orgId = req.body.orgId;
-
-});
-
-
 
 
 module.exports = router;

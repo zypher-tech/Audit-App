@@ -27,9 +27,11 @@ $('#orgs').click(function(){
             headers : {
                 'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
             },
+            type: "GET",
             url: link,
             dataType: 'json',
             success: function(res) {
+                console.log("got Response");
                 $('.loading').remove();
                 $('.list-item').remove();
                 for(var i=0; i< res.orgs.length; i++) {
