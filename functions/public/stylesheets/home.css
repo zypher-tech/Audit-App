@@ -20,6 +20,11 @@
         padding-top: 30px;
     }
     
+    #dashboard {
+        display: none;
+        padding-top: 30px;
+    }
+    
     .list-item {
         padding: 8px;
         margin-bottom: 8px;

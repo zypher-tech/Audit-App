@@ -10,9 +10,17 @@ $('#options').click(function(){
 
 $('#orgs').click(function(){
     var list = $('#list-items');
-    list.toggle();
-    $('.welcome').toggle();
     var isVisible = list.is(':visible');
+    var welIsVisible = $('.welcome').is(':visible');
+    $('#dashboard').hide();
+    
+    if (welIsVisible==false && isVisible==false) {
+        $('.welcome').hide();
+        list.show();
+    } else {
+        $('.welcome').toggle();
+        list.toggle();
+    }
     
     if (isVisible) {
         $.ajax({
@@ -72,3 +80,26 @@ $('#submitName').click(function(){
     }
 });
 
+
+//opens dashboard
+$('#dash').click(function(){
+    var wel = $('.welcome');
+    var dashboard = $('#dashboard');
+    var list = $('#list-items');
+    var listIsVisible = list.is(':visible');
+    var dashIsVisible = dashboard.is(':visible');
+    var welIsVisible = wel.is(':visible');
+    if (welIsVisible) {
+        wel.toggle();
+        dashboard.show();
+    } else if (listIsVisible) {
+        list.toggle();
+        dashboard.show();
+    } else if (dashIsVisible) {
+        dashboard.toggle();
+        wel.show();
+    } else {
+        dashboard.show();
+    }
+    
+});
