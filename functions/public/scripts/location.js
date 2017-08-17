@@ -17,14 +17,14 @@ $.ajax({
     success: function(res) {
         $('.loading').remove();
         $('.list-item').remove();
-        for(var i=0; i< res.locs.length; i++) {
-                var locs = res.locs[i];
+        for(var i=0; i< res.locations.length; i++) {
+                var locs = res.locations[i];
             //display list of location filtering using orgid
-            $('#list-items').append(
-                '<a href="department.hbs?loc='+locs.name+'"><div class="list-item"><h2>'+locs.name+'</h2></a>'
-            );
-            
-            $('#nav-bar').html('<a href="home.hbs">&lt; BACK</a>');
+            if(locs.orgId == orgid) {
+                $('#list-items').append(
+                    '<a href="department.hbs?loc='+locs.locationId+'"><div class="list-item"><h2>'+locs.name+'</h2></a>'
+                );
+            }
         }
     },
     error: function(){alert('Error retrieving data. Please try again later.');}
