@@ -490,6 +490,36 @@ router.post('/getAudits',(req,res)=>{
 });
 
 
+router.post('/getAuditsforSave',(req,res)=>{
+  //must send the id and name of field with which u  want to get the data. 
+  	    var id = req.body.id;
+		var name=req.body.name;
+		var auditRef = db.ref("audits");
+		var returnJson = {
+			"audits":[]
+		};
+		auditRef.orderByChild(name).equalTo(id).once("value",snap => {
+			if (snap.val()) {
+				snap.forEach(s=>{
+						returnJson.audits.push({
+							questionText:s.val().questionText,
+							option:s.val().option,
+							extraText:s.val().extraText,
+							fileUrl:s.val().fileUrl
+					});
+				});
+				returnJson.status = 1;
+				res.send(returnJson);
+					
+			}
+			else{
+				res.send({status:0});
+			}
+		});
+
+});
+
+
 
 
 /*The API which savesQuestions*/
