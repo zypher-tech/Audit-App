@@ -255,7 +255,7 @@ router.post('/getLocations',(req, res) => {
     
 });
 
-router.get('/getDepartments',(req, res) => {
+router.post('/getDepartments',(req, res) => {
     	var locationId = req.body.locationId;
     	var departmentRef = db.ref("department");
     	var returnJson = {
@@ -434,7 +434,7 @@ router.post('/createAudit',(req,res) => {
 
 
 
-router.get('/getAudits',(req,res)=>{
+router.post('/getAudits',(req,res)=>{
    
   	    var orgId = req.body.orgId;
 		var locationId = req.body.locationId;
@@ -450,6 +450,36 @@ router.get('/getAudits',(req,res)=>{
 						returnJson.audits.push({
 							auditId:s.val().auditId,
 							auditName:s.val().auditName
+					});
+				});
+				returnJson.status = 1;
+				res.send(returnJson);
+					
+			}
+			else{
+				res.send({status:0});
+			}
+		});
+
+});
+
+
+router.post('/getAuditsforSave',(req,res)=>{
+  //must send the id and name of field with which u  want to get the data. 
+  	    var id = req.body.id;
+		var name=req.body.name;
+		var auditRef = db.ref("audits");
+		var returnJson = {
+			"audits":[]
+		};
+		auditRef.orderByChild(name).equalTo(id).once("value",snap => {
+			if (snap.val()) {
+				snap.forEach(s=>{
+						returnJson.audits.push({
+							questionText:s.val().questionText,
+							option:s.val().option,
+							extraText:s.val().extraText,
+							fileUrl:s.val().fileUrl
 					});
 				});
 				returnJson.status = 1;
