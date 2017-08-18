@@ -1,4 +1,4 @@
-var getlink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getLocations';
+link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getLocations';
 
 var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createLocation';
 
@@ -10,32 +10,29 @@ for(pair of entries) {
   console.log(orgid);
 }
 
+var req = {
+    orgId : orgid,
+}
 
- var reqBody = JSON.stringify({orgId:orgid});
-console.log("Sending Request Body :"+reqBody);
+console.log(req);
 
 $.ajax({
+    headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
     type: "POST",
-    url: getlink,
-    data:reqBody,
-    dataType: "json",
-    contentType: 'application/json; charset=utf-8',
-
+    url: link,
+    data: req,
+    dataType: 'json',
     success: function(res) {
-        console.log("Got response : "+res.status);
         $('.loading').remove();
         $('.list-item').remove();
-         if (res.status == 1) {
-             for(var i=0; i< res.locations.length; i++) {
-                var locs = res.locations[i];
-                //display list of location filtering using orgid
-                $('#list-items').append(
-                    '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+locs.orgid+'"><div class="list-item"><h6>'+locs.locationName+'</h6></div></a>'
-                );
-            }
-        }
-        else{
-            console.log("no status");
+        for(var i=0; i< res.locations.length; i++) {
+            var locs = res.locations[i];
+            //display list of location filtering using orgid
+            $('#list-items').append(
+                '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+orgid+'"><div class="list-item"><h2>'+locs.name+'</h2></div></a>'
+            );
         }
     },
     error: function(){alert('Error retrieving data. Please try again later.');}

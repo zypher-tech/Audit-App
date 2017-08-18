@@ -46,7 +46,9 @@ $('#orgs').click(function(){
                    
                     var status = $(this).attr('id');
                     alert("Organiation Clicked :" +status);
-                    window.location.href = 'location?orgId='+status;
+                    window.location.href = 'views/location.html?orgId='+status;
+
+
                     
                 });
                 

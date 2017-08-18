@@ -26,4 +26,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 
+
 exports.app = functions.https.onRequest(app);

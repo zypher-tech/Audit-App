@@ -1,41 +1,39 @@
-var getlink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getLocations';
+link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getDepartments';
 
-var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createLocation';
+var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createDepartment';
+
 
 var urlParams = new URLSearchParams(window.location.search);
 
 var entries = urlParams.entries();
+var req = {};
+var key;
+//creating request input for post request
 for(pair of entries) { 
-  var orgid = pair[1];
-  console.log(orgid);
+    key = pair[0];
+    req[key] = pair[1];
 }
 
+console.log(req);
 
- var reqBody = JSON.stringify({orgId:orgid});
-console.log("Sending Request Body :"+reqBody);
-
+jabberwock12
 $.ajax({
+    headers : {
+        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
     type: "POST",
-    url: getlink,
-    data:reqBody,
-    dataType: "json",
-    contentType: 'application/json; charset=utf-8',
-
+    url: link,
+    data: req,
+    dataType: 'json',
     success: function(res) {
-        console.log("Got response : "+res.status);
         $('.loading').remove();
         $('.list-item').remove();
-         if (res.status == 1) {
-             for(var i=0; i< res.locations.length; i++) {
-                var locs = res.locations[i];
-                //display list of location filtering using orgid
-                $('#list-items').append(
-                    '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+locs.orgid+'"><div class="list-item"><h6>'+locs.locationName+'</h6></div></a>'
-                );
-            }
-        }
-        else{
-            console.log("no status");
+        for(var i=0; i< res.departments.length; i++) {
+            var deps = res.departments[i];
+            //display list of location filtering using orgid
+            $('#list-items').append(
+                '<a href="domain.hbs?locationId='+req.locationId+'&orgId'+req.orgId+'&deptId='+deps.deptId+'"><div class="list-item"><h2>'+deps.departmentName+'</h2></div></a>'
+            );
         }
     },
     error: function(){alert('Error retrieving data. Please try again later.');}
@@ -62,13 +60,13 @@ $('#submitName').click(function(){
                 dataType: "json",
 
                 success: function(data) {
-                    if(data.status == 1) {
-                        $('body').append('<div class="success"><p>Location successfully created!</p></div>')
+                    if (data.status == 1) {
+                        $('body').append('<div class="success"><p>Department successfully created!</p></div>')
                         setTimeout(function(){
                             $('.success').hide();
                         }, 2000);
                     } else if(data.status == 0) {
-                        $('body').append('<div class="success"><p>Location creation unsuccessful!</p></div>')
+                        $('body').append('<div class="success"><p>Department creation unsuccessful!</p></div>')
                         setTimeout(function(){
                             $('.success').hide();
                         }, 2000);

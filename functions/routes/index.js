@@ -19,6 +19,11 @@ router.get('/dash',(req,res)=>{
 
 
 
+router.get('/location',(req,res)=>{
+	res.render('location');
+});
+
+
 
 // @deepak please use variables names properly ,
 
@@ -51,6 +56,8 @@ router.post('/createOrganisation', (req, res) => {
 		}
 	});
 });
+
+
 
 
 
@@ -241,20 +248,23 @@ router.post('/getLocations',(req, res) => {
 
 	// The Org to get Locations
 	var  orgId = req.body.orgId;
+	console.log("Organisation To Query "+orgId);
 
 	var locRef = db.ref("locations");
 	var returnJson = {
 		"locations":[]
 	};
 
-	locRef.orderByChild("orgId").equalTo(orgId).once("value",snap=>{
+
+
+	locRef.orderByChild("orgId").equalTo(orgId).once("value",snap => {
+		console.log("Inside Callback");
 		if (snap.val()) {
 			// Locations Exist
 			snap.forEach(single=>{
 				returnJson.locations.push({
 					locationId:single.val().locationId,
 					locationName:single.val().locationName
-
 				});
 			});
 			returnJson.status = 1;
@@ -587,6 +597,7 @@ router.post('/generateByDomain',(req, res) => {
 		if (snap.val()) {
 
 				snap.forEach(s => {
+				
 					// we have list of Audits of september
 						if (s.val().critical==1) {
 							criticalCount ++;

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!--Importing stylesheet-->
+    <link rel = "stylesheet" type = "text/css" href = "stylesheets/other.css">
+    <link rel = "stylesheet" type = "text/css" href = "stylesheets/animate.css">
+    <!--Material design library (css and js)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+<body>
+    <!--header menu and logo-->
+    <div id="header">
+        <div id="main">
+            <a href="home.hbs">
+            <div id="header-logo">
+                <div>GAP Analysis</div>
+                <div style="font-size: 0.7em;">Powered by</div>
+                <div id="logo-img"><img src="images/logo.png" alt="bookaholicc.com" width="70"></div>
+            </div>
+            </a>
+            <div id="options">
+                <button class="mdl-button mdl-js-button mdl-button--accent">
+                  MENU
+                </button>
+            </div>
+            <div id="admin-user">
+                <button class="mdl-button mdl-js-button mdl-button--accent">
+                  ADMIN
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--accent">
+                  USER
+                </button>
+            </div>
+            <div id="show-list">
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <!--main content-->
+    <div id="content">
+        <div id="nav-bar">
+            <button onclick="goBack()" class="mdl-button mdl-js-button mdl-button--accent">Go Back</button>
+        </div>
+        <div id="list-items">
+            <!--list of organizations would go here-->
+            <div class="loading"><div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div></div>
+        </div>
+    </div>
+    
+    <!--dialogs-->
+    <dialog class="mdl-dialog">
+        <h4 class="mdl-dialog__title" id="modal_title">Create </h4>
+        <div class="mdl-dialog__content">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="name">
+            <label class="mdl-textfield__label" for="name" id="placeho"> name</label>
+            </div>           
+        </div>
+        <div class="mdl-dialog__actions">
+          <button type="button" class="mdl-button close" id="submitName">Submit</button>
+          <button type="button" class="mdl-button" id="close">Close</button>
+        </div>
+    </dialog>
+    
+    <!--Create button-->
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="create_button">
+      <i class="material-icons">add</i>
+    </button>
+    
+    <!--script for create dialog-->
+    <script>
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#create_button');
+        if (! dialog.showModal) {
+          dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function() {
+          dialog.showModal();
+        });
+        dialog.querySelector('.close').addEventListener('click', function() {
+          dialog.close();
+        });
+        
+        dialog.querySelector('#close').addEventListener('click', function() {
+          dialog.close();
+        });
+    </script>
+    
+    <!--jQuery imported-->
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        var page_name = 'Domain';
+        $('#modal_title').append(page_name);
+        $('#placeho').prepend(page_name);
+        $('#show-list span').text(page_name + 's');
+        $('title').text(page_name + 's');
+        
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <!--JavaScript file imported-->
+    <script src = "scripts/domain.js"></script>
+</body>
+</html>

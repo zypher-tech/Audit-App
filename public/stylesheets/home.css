@@ -1,0 +1,182 @@
+
+@media screen and (min-width: 1000px) {
+    .loading {
+        position: absolute; 
+        top: 50%; 
+        left: 450px;
+    }
+    
+    .success {
+        background-color: white;
+        position: fixed;
+        left: 40%;
+        top: 200px;
+        padding: 30px;
+        box-shadow: 3px 3px 10px black;
+    }
+    
+    #list-items {
+        display: none;
+        padding-top: 30px;
+    }
+    
+    #dashboard {
+        display: none;
+        padding-top: 30px;
+    }
+    
+    .list-item {
+        padding: 8px;
+        margin-bottom: 8px;
+        box-shadow: 1px 1px 4px grey;
+    }
+    
+    #options {
+        display: none;
+    }
+    #create_button {
+        position: fixed;
+        right: 48%;
+        bottom: 20px;
+    }
+
+    #content {
+        margin: auto;
+        width: 900px;
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+    
+    .welcome {
+        text-align: center;
+        padding-top: 20px;
+    }
+    
+    #header {
+        height: 70px;
+        box-shadow: 0px 2px 3px grey;
+        position: fixed;
+        top: 0px;
+        width: 100%;
+        z-index: 1;
+        background-color: white;
+    }
+    
+    #main {
+        height: 70px;
+        width: 900px;
+        margin: auto;
+        position: relative;
+    }
+    
+    #header-logo {
+        position: absolute;
+        left: 0px;
+        background-color: aquamarine;
+        padding: 10px;
+        height: 50px;
+        text-align: center;
+    }
+    
+    #logo-img {
+        margin-top: -29px;
+    }
+    
+    #show-list {
+        float: right;
+        padding: 17px;
+    }
+    
+    #admin-user {
+        float: right;
+        padding: 17px;
+    }
+}
+
+@media screen and (max-width: 999px)  {
+    #list-items {
+        padding: 10px;
+        display: none;
+    }
+    
+    #dashboard {
+        display: none;
+        padding-top: 10px;
+    }
+    
+    .success {
+        background-color: white;
+        position: fixed;
+        left: 20%;
+        top: 200px;
+        padding: 30px;
+        box-shadow: 3px 3px 10px black;
+    }
+    
+    .loading {
+        position: absolute; 
+        top: 50%; 
+        width: 95%;
+    }
+    
+    .list-item {
+        padding: 8px;
+        margin-bottom: 8px;
+        box-shadow: 1px 1px 4px grey;
+    }
+    
+    #create_button {
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
+    }
+    
+    #content {
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+    
+    #header {
+        height: 100px;
+        position: fixed;
+        top: 0px;
+        width: 100%;
+    }
+    
+    #main {
+        padding: 6px;
+        overflow: auto;
+        height: auto;
+        background-color: cyan;
+    }
+    
+    #header-logo {
+        display: none;
+    }
+    
+    #admin-user {
+        display: none;
+    }
+    
+    #options {
+        float: right;
+    }
+    
+    #show-list {
+        float: left;
+    }
+    
+    .welcome {
+        text-align: center;
+    }
+    
+    #admin-user {
+        width: auto;
+        position: fixed;
+        top: 80px;
+        right: 15px;
+        background-color: white;
+        border-radius: 1em;
+        box-shadow: 2px 2px 30px grey;
+    }
+}
