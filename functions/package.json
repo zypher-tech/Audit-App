@@ -3,6 +3,7 @@
   "description": "Cloud Functions for Firebase",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "chart.js": "^2.6.0",
     "consolidate": "^0.14.5",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
