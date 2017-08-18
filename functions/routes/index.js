@@ -7,22 +7,30 @@ var db = firebase.database();
 const cors = require('cors')({origin: true});
 
 
-router.get('/home',(req,res)=>{
+router.get('/home',(req,res)=> {
     res.render('home');
 });
 
 
 
-router.get('/dash',(req,res)=>{
+router.get('/dash',(req,res)=> {
     res.render('dashboard');
 });
 
 
 
-router.get('/location',(req,res)=>{
+router.get('/location',(req,res)=> {
 	res.render('location');
 });
 
+
+router.get('/department',(req,res)=> {
+	res.render('department');
+});
+
+router.get('/domain',(req,res)=> {
+	res.render('domain');
+});
 
 
 // @deepak please use variables names properly ,
@@ -132,7 +140,7 @@ router.post('/createDepartment',(req, res) => {
     		deptId:Date.now()
     	};
 
-    	var departmentRef = db.ref("detpartments");
+    	var departmentRef = db.ref("department");
     	departmentRef.push(newDept,err => {
     		if (err) {
     			res.send({status:0});
@@ -279,15 +287,16 @@ router.post('/getLocations',(req, res) => {
 });
 
 router.post('/getDepartments',(req, res) => {
+
     	var locationId = req.body.locationId;
-    	var departmentRef = db.ref("detpartments");
+    	var departmentRef = db.ref("department");
     	var returnJson = {
     		"department":[]
     	};
 
-    	departmentRef.orderByChild("locationId").equalTo(locationId).once("value",snap=>{
+    	departmentRef.orderByChild("locationId").equalTo(locationId).once("value",snap => {
     		if (snap.val()) {
-    			snap.forEach(s=>{
+    			snap.forEach(s => {
     				returnJson.department.push({
     					deptId:s.val().deptId,
     					departmentName:s.val().departmentName
@@ -309,8 +318,6 @@ router.post('/getDepartments',(req, res) => {
 // the database with only deptId
 router.post('/getDomains',(req, res) => {
 
-	var locationId = req.body.locationId;
-	var orgId  = req.body.orgId;
 	var deptId = req.body.deptId;
 
 	// we have Domain Id 
@@ -356,13 +363,23 @@ router.post('/getDomains',(req, res) => {
 
 router.post('/getQuestions',(req, res) => {
 
-	var locationId = req.body.locationId;
-	var orgId  = req.body.orgId;
-	var deptId = req.body.deptId;
+	// var locationId = req.body.locationId;
+	// var orgId  = req.body.orgId;
+	// var deptId = req.body.deptId;
 	var domainId  = req.body.domainId;
 	var questionsRef = db.ref("questions");
+	var returnJson = {
+		"questions":[]
+	}
 	questionsRef.orderByChild("domainId").equalTo(domainId).once("value",snap => {
-		res.send(snap.val());
+		if (snap.val()) {
+			snap.forEach(s => {
+				
+			});
+		}
+		else{
+			res.send({status:0});
+		}
 	});
 
     

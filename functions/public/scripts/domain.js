@@ -1,40 +1,52 @@
-link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getDomains';
+var getDomainslink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getDomains';
 
 var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createDomain';
 
 
-var urlParams = new URLSearchParams(window.location.search);
+var deptId = getUrlParameter('deptId');
+var locationId = getUrlParameter('locationId');
+var orgId = getUrlParameter('orgId');
 
-var entries = urlParams.entries();
-var req = {};
-var key;
-//creating request input for post request
-for(pair of entries) { 
-    key = pair[0];
-    req[key] = pair[1];
-}
 
-console.log(req);
+
+var reqBody = JSON.stringify({deptId:parseInt(deptId)});
 
 
 $.ajax({
-    headers : {
-        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-    },
     type: "POST",
-    url: link,
-    data: req,
+    url: getDomainslink,
+    data: reqBody,
     dataType: 'json',
+     dataType: "json",
+    contentType: 'application/json; charset=utf-8',
     success: function(res) {
         $('.loading').remove();
         $('.list-item').remove();
-        for(var i=0; i< res.domains.length; i++) {
-            var doms = res.domains[i];
-            //display list of location filtering using orgid
-            $('#list-items').append(
-                '<a href="questions.hbs?locationId='+req.locationId+'&orgId'+req.orgId+'&deptId='+req.deptId+'&domainId='+doms.domainId+'"><div class="list-item"><h2>'+doms.domainName+'</h2></div></a>'
-            );
+        if (res.status == 1) {
+              for(var i=0; i< res.domains.length; i++) {
+                var doms = res.domains[i];
+                    //display list of location filtering using orgid
+                var newDiv = '<div class="list-item" id="'+doms.domainId+'"><h6>'+doms.domainName+'</h6></div>';
+                 $('#list-items').append(
+                             newDiv  // '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
+                  ); 
+
+                    // $('#list-items').append(
+                    //     '<a href="questions.hbs?locationId='+req.locationId+'&orgId'+req.orgId+'&deptId='+req.deptId+'&domainId='+doms.domainId+'"><div class="list-item"><h2>'+doms.domainName+'</h2></div></a>'
+                    // );
+            }
+             $("#list-items").on("click", "div", function() {
+                   
+                    var domainId = $(this).attr('id');
+                    // alert("Organiation Clicked :" +status);
+                    window.location.href = 'questions?locationId='+locationId+'&orgId'+orgId+'&deptId='+deptId+'&domainId='+domainId;
+                    
+                });
         }
+        else{
+            console.log("No status");
+        }
+      
     },
     error: function(){alert('Error retrieving data. Please try again later.');}
 });
@@ -78,3 +90,20 @@ $('#submitName').click(function(){
             });
     }
 });
+
+
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};

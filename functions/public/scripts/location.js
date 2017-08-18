@@ -2,16 +2,12 @@ var getlink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getLoc
 
 var createLink = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/createLocation';
 
-var urlParams = new URLSearchParams(window.location.search);
-
-var entries = urlParams.entries();
-for(pair of entries) { 
-  var orgid = pair[1];
-  console.log(orgid);
-}
 
 
- var reqBody = JSON.stringify({orgId:orgid});
+var orgid = getUrlParameter('orgId');
+
+
+ var reqBody = JSON.stringify({orgId:parseInt(orgid)});
 console.log("Sending Request Body :"+reqBody);
 
 $.ajax({
@@ -29,16 +25,31 @@ $.ajax({
              for(var i=0; i< res.locations.length; i++) {
                 var locs = res.locations[i];
                 //display list of location filtering using orgid
-                $('#list-items').append(
-                    '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+locs.orgid+'"><div class="list-item"><h6>'+locs.locationName+'</h6></div></a>'
-                );
+                 var newDiv = '<div class="list-item" id="'+locs.locationId+'"><h6>'+locs.locationName+'</h6></div>';
+                 $('#list-items').append(
+                             newDiv  // '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
+                  ); 
+                // $('#list-items').append(
+                //     '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+locs.orgid+'"><div class="list-item"><h6>'+locs.locationName+'</h6></div></a>'
+                // );
             }
+             $("#list-items").on("click", "div", function() {
+                   
+                    var locId = $(this).attr('id');
+
+                    alert("Organiation Clicked :" +status);
+                    window.location.href = 'department?orgId='+orgid+'&locationId='+locId;
+                    
+                });
+
         }
         else{
             console.log("no status");
         }
     },
-    error: function(){alert('Error retrieving data. Please try again later.');}
+    error: function(){
+        alert('Error retrieving data. Please try again later.');
+    }
 });
 
 $('#options').click(function(){
@@ -80,4 +91,21 @@ $('#submitName').click(function(){
             });
     }
 });
+
+
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
 
