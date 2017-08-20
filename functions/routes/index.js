@@ -33,6 +33,9 @@ router.get('/domain',(req,res)=> {
 });
 
 
+router.get('/questions',(req,res)=> {
+	res.render('questions');
+});
 // @deepak please use variables names properly ,
 
 
@@ -374,8 +377,13 @@ router.post('/getQuestions',(req, res) => {
 	questionsRef.orderByChild("domainId").equalTo(domainId).once("value",snap => {
 		if (snap.val()) {
 			snap.forEach(s => {
-				
+						returnJson.questions.push({
+							questionId:s.val().questionId,
+							questionText:s.val().questionText
+						});
 			});
+			returnJson.status = 1;
+			res.send(returnJson);
 		}
 		else{
 			res.send({status:0});
