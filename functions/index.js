@@ -16,10 +16,8 @@ var index = require('./routes/index');
 
 const app=express();
 app.engine('hbs',engines.handlebars);
-app.set('views','views');
-app.set('views','../views');
-app.set('views','/views')
-app.set('views','./views');
+app.set('views','./public/views');
+
 app.set('view engine','hbs');
 app.use(cors);
 

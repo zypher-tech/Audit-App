@@ -83,13 +83,15 @@ router.post('/LocationReport',(req, res) => {
 
 });
 
-router.post('/orgReport',(req, res) => {
+// router.post('/orgReport',(req, res) => {
 		
 
 
-});
+// });
 
 router.post('/deptReport',(req, res) => {
+
+
 var locationId = req.body.locationId;
 	var auditId = req.body.auditId;
 });
@@ -629,17 +631,18 @@ router.post('/getAudits',(req,res)=>{
 });
 
 
-<<<<<<< HEAD
+
 router.post('/getReportFor',(req,res)=>{
   //must send the id and name of field with which u  want to get the data. 
   	    var id = req.body.adui;
 		var name=req.body.name;
-=======
+	});
+
 router.get('/getAuditsforSave',(req,res)=>{
   //must send the id and name of field with which u  want to get the data. 
   	    var id = 2334;
 		var name="auditId";
->>>>>>> 00f5b0419bfb8645babbd52142220ab8384b2504
+
 		var auditRef = db.ref("audits");
 		var returnJson = {
 			"audits":[]
@@ -730,9 +733,6 @@ router.post('/saveAnswer',(req, res) => {
 			res.send(newAuditForQuestion);
 		}
 	});
-
-	
-		 
 });
 
 
@@ -842,15 +842,15 @@ router.post('/generateByDomain',(req, res) => {
 router.get('/getDocument',(req,res)=>{
 	//const numberedAbstract = numbering.createAbstractNumbering();
 	 var data=[{
-	  "question":"what is your name?",
-	  "option":"Deepak"
-	  },
-	  {
-		"question":"where do u belong from",
-		"option":"nepal"
-	  }
+	 	 "question":"what is your name?",
+	  	 "option":"Deepak"
+		},
+	  	{
+			"question":"where do u belong from",
+			"option":"nepal"
+	  	}
 	  
-	  ]
+	  ];
 	  const doc = new docx.Document();
 	  const numbering = new docx.Numbering();
 	  const numberedAbstract = numbering.createAbstractNumbering();
@@ -877,11 +877,7 @@ router.get('/getDocument',(req,res)=>{
 	var exporter = new docx.ExpressPacker(doc, res);
 	 
 	exporter.pack('My First Document');
-  
-  
-  })
-
-
+});
 
 
 

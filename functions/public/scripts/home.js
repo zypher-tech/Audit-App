@@ -49,6 +49,14 @@ $('#orgs').click(function(){
                     window.location.href = 'location?orgId='+status;
                     
                 });
+                $(document).on({
+                      mouseenter: function () {
+                        $(this).animate({ height: "200", width: "200", left: "-=55", top: "-=55" }, "fast");
+                      },
+                      mouseleave: function () {
+                        $(this).animate({ height: "90", width: "90", left: "+=55", top: "+=55" }, "fast");
+                      }    
+                    }, '.img a img');
                 
             },
             error: function(){alert('Error retrieving data. Please try again later.');}

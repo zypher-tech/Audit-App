@@ -32,11 +32,11 @@ $.ajax({
                 // $('#list-items').append(
                 //     '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+locs.orgid+'"><div class="list-item"><h6>'+locs.locationName+'</h6></div></a>'
                 // );
-            }
+            };
              $("#list-items").on("click", "div", function() {
                    
                     var aid = $(this).attr('id');
-                    window.location.href ='performAudit?locationId='+locationId+'&orgId'+orgId+'&deptId='+deptId+'&domainId='+domainId+'&auditId='+aid;
+                    window.location.href ='department?locationId='+aid+'&orgId'+orgid;
                 });
 
         }

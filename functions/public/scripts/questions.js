@@ -1,5 +1,5 @@
 var link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getQuestions';
-var creatAudit  = 
+// var creatAudit  = 
 
 
 
