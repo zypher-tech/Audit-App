@@ -5,6 +5,7 @@ const app=express();
 var router = express.Router();
 var db = firebase.database();
 const cors = require('cors')({origin: true});
+var docx = require('docx');
 
 
 router.get('/home',(req,res)=> {
@@ -628,10 +629,17 @@ router.post('/getAudits',(req,res)=>{
 });
 
 
+<<<<<<< HEAD
 router.post('/getReportFor',(req,res)=>{
   //must send the id and name of field with which u  want to get the data. 
   	    var id = req.body.adui;
 		var name=req.body.name;
+=======
+router.get('/getAuditsforSave',(req,res)=>{
+  //must send the id and name of field with which u  want to get the data. 
+  	    var id = 2334;
+		var name="auditId";
+>>>>>>> 00f5b0419bfb8645babbd52142220ab8384b2504
 		var auditRef = db.ref("audits");
 		var returnJson = {
 			"audits":[]
@@ -646,8 +654,34 @@ router.post('/getReportFor',(req,res)=>{
 							fileUrl:s.val().fileUrl
 					});
 				});
-				returnJson.status = 1;
-				res.send(returnJson);
+				const doc = new docx.Document();
+				const numbering = new docx.Numbering();
+				const numberedAbstract = numbering.createAbstractNumbering();
+				numberedAbstract.createLevel(0, "lowerLetter", "%1)", "left");
+				
+				//const doc = new docx.Document();
+				//const doc1 = new docx.Document();
+				
+				 const letterNumbering = numbering.createConcreteNumbering(numberedAbstract);
+				// data.forEach((opt) =>
+				//     doc.createParagraph(opt.question,opt.option).setNumbering(letterNumbering, 0)
+				// );
+				for(i=0;i<data.length;i++){
+				  doc.createParagraph((i+1)+") "+data[i].questionText)
+				  doc.createParagraph(data[i].option);
+				  doc.createParagraph(data[i].extraText);
+				  doc.createParagraph(data[i].fileUrl);
+				 }
+			  
+			   
+			  // Used to export the file into a .docx file 
+			  //var exporter = new docx.LocalPacker(doc);
+			   
+			  // Or use the express packer to make the file downloadable. 
+			  // res is express' Response object 
+			  var exporter = new docx.ExpressPacker(doc, res);
+			   
+			  exporter.pack('My First Document');
 					
 			}
 			else{
@@ -802,6 +836,54 @@ router.post('/generateByDomain',(req, res) => {
 
 	});
 });
+
+
+
+router.get('/getDocument',(req,res)=>{
+	//const numberedAbstract = numbering.createAbstractNumbering();
+	 var data=[{
+	  "question":"what is your name?",
+	  "option":"Deepak"
+	  },
+	  {
+		"question":"where do u belong from",
+		"option":"nepal"
+	  }
+	  
+	  ]
+	  const doc = new docx.Document();
+	  const numbering = new docx.Numbering();
+	  const numberedAbstract = numbering.createAbstractNumbering();
+	  numberedAbstract.createLevel(0, "lowerLetter", "%1)", "left");
+	  
+	  //const doc = new docx.Document();
+	  //const doc1 = new docx.Document();
+	  
+	   const letterNumbering = numbering.createConcreteNumbering(numberedAbstract);
+	  // data.forEach((opt) =>
+	  //     doc.createParagraph(opt.question,opt.option).setNumbering(letterNumbering, 0)
+	  // );
+	  for(i=0;i<data.length;i++){
+		doc.createParagraph((i+1)+") "+data[i].question)
+		doc.createParagraph(data[i].option);
+	   }
+	
+	 
+	// Used to export the file into a .docx file 
+	//var exporter = new docx.LocalPacker(doc);
+	 
+	// Or use the express packer to make the file downloadable. 
+	// res is express' Response object 
+	var exporter = new docx.ExpressPacker(doc, res);
+	 
+	exporter.pack('My First Document');
+  
+  
+  })
+
+
+
+
 
 
 module.exports = router;
