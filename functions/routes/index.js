@@ -446,6 +446,69 @@ router.post('/editLocation',(req, res) => {
 
 
 
+
+router.post('/createAudit',(req, res) => {
+	var auditName = req.body.auditName;
+	var auditDate = req.body.auditDate;
+	var domainId = req.body.domainId;
+	var orgId = req.body.orgId;
+	var deptId = req.body.deptId;
+	var locationId = req.body.locationId;
+	var auditRef = db.ref("audits");
+	var newAuditObj = {
+		auditId:Date.now(),
+		auditName:auditName,
+		domainId:domainId,
+		orgId:orgId,
+		deptId:deptId,
+		locationId:locationId
+	};
+	auditsRef.push(newAuditObj,err=>{
+		if (err) {
+			res.send({status:0});
+		}
+		else{
+			newAuditObj.status = 1;
+			res.send(newAuditObj);
+
+		}
+	});	
+});
+
+router.post('/getAudits',(req, res) => {
+
+	var domainId  = req.body.domainId;
+	var auditRef = db.ref("audits");
+	auditRef.orderByChild("domainId").equalTo(domainId).once("value",snap=>{
+		if (snap.val()) {
+			var returnJson = {
+				"audits":[]
+
+			};
+			snap.forEach(s=>{
+				returnJson.audits.push({
+					auditId:s.val().auditId,
+					auditName:s.val().auditName,
+					auditDate:s.val().auditDate
+				});
+			});
+				
+			res.status = 1;
+			res.send(returnJson);
+
+		}
+		else{
+			res.send({status:0});
+		}
+	});
+	
+    
+});
+
+
+
+
+
 router.post('/editDepartment',(req, res) => {
     
 });
@@ -539,9 +602,9 @@ router.post('/getAudits',(req,res)=>{
 });
 
 
-router.post('/getAuditsforSave',(req,res)=>{
+router.post('/getReportFor',(req,res)=>{
   //must send the id and name of field with which u  want to get the data. 
-  	    var id = req.body.id;
+  	    var id = req.body.adui;
 		var name=req.body.name;
 		var auditRef = db.ref("audits");
 		var returnJson = {

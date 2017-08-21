@@ -71,9 +71,9 @@ function checkAdmin(email,pass){
 
                 success: function(data) {
                     if (data.status == 1) {
-                        
+
                         // Admin user, Navigate to Home
-                        window.location.href = 'home';
+                         window.location.href = 'home';
                      }
                      else{
                        // The Logged in User is Normal, show Organisations page

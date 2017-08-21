@@ -35,11 +35,8 @@ $.ajax({
             }
              $("#list-items").on("click", "div", function() {
                    
-                    var locId = $(this).attr('id');
-
-                    alert("Organiation Clicked :" +status);
-                    window.location.href = 'department?orgId='+orgid+'&locationId='+locId;
-                    
+                    var aid = $(this).attr('id');
+                    window.location.href ='performAudit?locationId='+locationId+'&orgId'+orgId+'&deptId='+deptId+'&domainId='+domainId+'&auditId='+aid;
                 });
 
         }
