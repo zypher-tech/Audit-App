@@ -40,6 +40,10 @@ router.get('/questions',(req,res)=> {
 
 
 
+router.get('/audit',(req,res)=> {
+	res.render('audit');
+});
+
 
 // Working
 
@@ -91,6 +95,7 @@ router.post('/createOrganisation', (req, res) => {
 
 
   */
+
 
   // Working
 router.post('/createLocation',(req, res) => {
@@ -255,6 +260,10 @@ router.get('/getOrganisations',(req, res) => {
 });
 
 
+
+
+
+
 router.post('/getLocations',(req, res) => {
 
 	// The Org to get Locations
@@ -394,6 +403,19 @@ router.post('/getQuestions',(req, res) => {
 });
 
 
+router.post('/checkAdmin',(req, res) => {
+		var email = req.body.email;
+		var pass = req.body.pass;
+		var returnJson = {};
+		if (email == "jaya@gmail.com" && pass == "123456789") {
+				returnJson.status = 1;
+				res.send(returnJson);
+		}
+		else{
+			res.send(returnJson);
+		}
+});
+
 router.post('/editOrgansation',(req, res) => {
 
 	var orgId = req.body.orgId;
@@ -417,6 +439,8 @@ router.post('/editLocation',(req, res) => {
 	
     
 });
+
+
 
 
 

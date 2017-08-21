@@ -17,7 +17,6 @@ $.ajax({
     url: getDomainslink,
     data: reqBody,
     dataType: 'json',
-     dataType: "json",
     contentType: 'application/json; charset=utf-8',
     success: function(res) {
         $('.loading').remove();

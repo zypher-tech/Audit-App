@@ -1,4 +1,5 @@
 var link = 'https://us-central1-audit-app-819d8.cloudfunctions.net/app/getQuestions';
+var creatAudit  = 
 
 
 
@@ -42,6 +43,56 @@ $.ajax({
 
 $('#options').click(function(){
     $('#admin-user').toggle();
+});
+
+
+
+
+// A 
+$('#new_audit').click(function(){
+
+       // Show a Dialog Box Asking for Audit Name and audit Date
+       // Hit the Webservice , if already Existing Audit clicked, show Audits Page , with Audit Id
+       // Else, if New Audit 
+           // window.location.href = window.location.href = 'audits?locationId='+locationId+'&orgId'+orgId+'&deptId='+deptId+'&domainId='+domainId;
+           // Get Audit Date 
+           // Get Audit Name
+        // var auditDate = 
+        // var auditName = 
+      
+
+        var requestBody = JSON.stringify({
+            auditDate:req.body.date;               // Get the Audit Date as a UTC timestamp
+            auditName:req.body.auditName;         // Get a Custom Audit Name
+            orgId:orgId,
+            locationId:locationId,
+            deptId:deptId,
+            domainId:domainId
+        }); 
+
+
+            $.ajax({
+                type: "POST",
+                url: creatAudit,
+                data: requestBody,
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function(res) {
+                    if (res.status == 1) {
+                          // New Audit Has been Created with Params,
+                          // NAvigate to Audits Page with AuditId
+                          var auditId = res.auditId;
+                          // Got The Audit Id, Navigate to next page,
+                          window.location.href = 'audit?auditId='+auditId;
+
+                    }
+                    else{
+                        console.log("Audit Not created");
+                    }
+                },
+                error: function(){alert('Error retrieving data. Please try again later.');}
+            });
+
 });
 
 

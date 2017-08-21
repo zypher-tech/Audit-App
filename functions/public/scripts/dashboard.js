@@ -2,6 +2,10 @@
 
  var ctx = $("#myChart");
 
+ // This Scripts are called either from Orgainsation/Location/Dept/Domain/Id with an  Audit Id
+ 
+
+
 
 
 var myChart = new Chart(ctx, {
@@ -40,3 +44,25 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+
+
+var getLocations=;
+var getDept=;
+var getOrgs=;
+var getDomain =;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

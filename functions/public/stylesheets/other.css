@@ -6,6 +6,11 @@
         margin-top: 80px;
     }
     
+
+    #question_item{
+        display: block;
+    }
+
     #show-list > span {
         position: absolute;
         top: 25px;
