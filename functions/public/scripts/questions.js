@@ -50,11 +50,8 @@ $('#options').click(function(){
 
 // The Button
 $('#show_audits').click(function(){
-
-
     window.location.href = 'view_audits?orgId='+orgId+'&locationId='+locationId+'&deptId='+deptId+'&domainId='+domainId;
     
-
     // got to Audits page with Audit Id
 
 

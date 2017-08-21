@@ -20,7 +20,7 @@ var checkAdminURL = '';
 
 
 
-$('#login_button')..click(function(){
+$('#login_button').click(function(){
    		// 
    		var email = ;
    		var pass = ;

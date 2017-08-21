@@ -38,9 +38,10 @@ $.ajax({
 
         //setting Click listener
        $("#list-items").on("click", "div", function() {
-                   
+                    // navigate to Audits page                   
                     var auditId = $(this).attr('id');
-                    // window.location.href = 'dashboard?orgId='+orgId+'&locationId='+locId
+                    window.location.href = 'new_audit?orgId='+orgId+'&locationId='+locId+'&deptId='+'&domainId='+domainId+'&auditId='+auditId;
+
                     
                 });
     },
@@ -84,10 +85,10 @@ $('#new_audit').click(function(){
 
                 success: function(data) {
                     if(data.status == 1) {
-                        $('body').append('<div class="success"><p>Location successfully created!</p></div>')
-                        setTimeout(function(){
-                            $('.success').hide();
-                        }, 2000);
+                            // New Audit Created , navigate to new Audit page
+                            var auditId = data.auditId;
+                            window.location.href = 'new_audit?orgId='+orgId+'&'
+
                     } else if(data.status == 0) {
                         $('body').append('<div class="success"><p>Location creation unsuccessful!</p></div>')
                         setTimeout(function(){

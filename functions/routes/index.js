@@ -74,6 +74,32 @@ router.post('/createOrganisation', (req, res) => {
 
 
 
+/*Query the Answers*/
+router.post('/LocationReport',(req, res) => {
+
+	var locationId = req.body.locationId;
+	var auditId = req.body.auditId;
+
+});
+
+router.post('/orgReport',(req, res) => {
+		
+
+
+});
+
+router.post('/deptReport',(req, res) => {
+var locationId = req.body.locationId;
+	var auditId = req.body.auditId;
+});
+
+router.post('/domainReport',(req, res) => {
+
+});
+
+router.post('/auditReport',(req, res) => {
+
+});
 
 
 /*Create New Location for a organisation.
