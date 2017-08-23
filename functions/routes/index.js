@@ -840,43 +840,78 @@ router.post('/generateByDomain',(req, res) => {
 
 
 router.get('/getDocument',(req,res)=>{
-	//const numberedAbstract = numbering.createAbstractNumbering();
-	 var data=[{
-	 	 "question":"what is your name?",
-	  	 "option":"Deepak"
-		},
-	  	{
-			"question":"where do u belong from",
-			"option":"nepal"
-	  	}
+
+var doc = new docx.Document();
+
+var paragraph = new docx.Paragraph("Hello World");
+var institutionText = new docx.TextRun("University College London").bold();
+var dateText = new docx.TextRun("5th Dec 2015").tab().bold();
+paragraph.addRun(institutionText);
+paragraph.addRun(dateText);
+
+doc.addParagraph(paragraph);
+
+// Feature coming soon
+// var media = new docx.Media();
+// media.addMedia("happy-penguins", "./demo/penguins.jpg");
+// var pictureRun = new docx.PictureRun(media.getMedia("happy-penguins"));
+
+// var exporter = new docx.LocalPacker(doc);
+var exporter = new docx.LocalPacker(doc);
+exporter.pack('My Document');
+	// //const numberedAbstract = numbering.createAbstractNumbering();
+	//  var data=[{
+	//  	 "question":"Is the HR Following Best Diversity Practices?",
+	//   	 "option":"Deepak",
+	//   	 "critical":"No",
+	//   	 "optionText":"No, Because the 70% people are male and above 35 years of Age",
+	//   	 "fileUrl":"https://firebasestorage.googleapis.com/v0/b/audit-app-819d8.appspot.com/o/Audit%20app_specs-14-August-2017%20.pdf?alt=media&token=391167a5-9be0-4c80-bdfd-c221cce7a53e"
+	// 	},
+	//   	{
+	// 		"question":"Does the Tech Team , run Security Protocal monthly",
+	// 		"option":"Partia",
+	// 		"critical":"No",
+	// 		"optionText":"The Team follows once in two month",
+	// 		"fileUrl":"https://firebasestorage.googleapis.com/v0/b/audit-app-819d8.appspot.com/o/Audit%20app_specs-14-August-2017%20.pdf?alt=media&token=391167a5-9be0-4c80-bdfd-c221cce7a53e"
+	//   	}
 	  
-	  ];
-	  const doc = new docx.Document();
-	  const numbering = new docx.Numbering();
-	  const numberedAbstract = numbering.createAbstractNumbering();
-	  numberedAbstract.createLevel(0, "lowerLetter", "%1)", "left");
+	//   ];
 	  
-	  //const doc = new docx.Document();
-	  //const doc1 = new docx.Document();
+	//   var doc = new docx.Document();
+	//   // const numbering = new docx.Numbering();
+	//   // const numberedAbstract = numbering.createAbstractNumbering();
+	//   // numberedAbstract.createLevel(0, "lowerLetter", "%1)", "left");
 	  
-	   const letterNumbering = numbering.createConcreteNumbering(numberedAbstract);
-	  // data.forEach((opt) =>
-	  //     doc.createParagraph(opt.question,opt.option).setNumbering(letterNumbering, 0)
-	  // );
-	  for(i=0;i<data.length;i++){
-		doc.createParagraph((i+1)+") "+data[i].question)
-		doc.createParagraph(data[i].option);
-	   }
+	//   // //const doc = new docx.Document();
+	//   // //const doc1 = new docx.Document();
+	  
+	//   //  const letterNumbering = numbering.createConcreteNumbering(numberedAbstract);
+	//   // // data.forEach((opt) =>
+	//   // //     doc.createParagraph(opt.question,opt.option).setNumbering(letterNumbering, 0)
+	//   var paragraph = new docx.Paragraph("Some cool text here.");
+
+	//   // );
+	//   for(i=0;i<data.length;i++){
+	// 	doc.createParagraph((i+1)+") "+data[i].question)
+	// 	doc.createParagraph(data[i].option);
+	// 	doc.createParagraph("Critcal: ");
+	// 	doc.createParagraph(data[i].critical);
+		
+	// 	doc.createParagraph("Optional Description: ");
+	// 	doc.createParagraph(data[i].optionText);
+	// 	doc.createParagraph("Attachement URL: ");
+	// 	doc.createParagraph(data[i].fileUrl);
+	//    }
 	
-	 
-	// Used to export the file into a .docx file 
-	//var exporter = new docx.LocalPacker(doc);
-	 
-	// Or use the express packer to make the file downloadable. 
-	// res is express' Response object 
-	var exporter = new docx.ExpressPacker(doc, res);
-	 
-	exporter.pack('My First Document');
+	//  
+	// // Used to export the file into a .docx file 
+	// //var exporter = new docx.LocalPacker(doc);
+	//  
+	// // Or use the express packer to make the file downloadable. 
+	// // res is express' Response object 
+	// var exporter = new docx.ExpressPacker(doc, res);
+	//  
+	// exporter.pack('Apple-Bang_Tech_Report');
 });
 
 

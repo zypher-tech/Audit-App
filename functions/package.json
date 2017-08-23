@@ -14,7 +14,7 @@
     "firebase-tools": "^3.9.2",
     "handlebars": "^4.0.10",
     "path": "^0.12.7",
-    "docx":"*"
+    "docx":"2.1.1"
   },
   "private": true
 }

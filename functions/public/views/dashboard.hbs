@@ -12,10 +12,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+
+  <!-- MIUI  -->
+<link href="//cdn.muicss.com/mui-0.9.22/css/mui.min.css" rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.9.22/js/mui.min.js"></script>
 <style>
     #myChart,#pie_chart{
         margin-left: 20%;
+        max-width: 300px;
+        max-height: 300px;
         width: 50px;
         height: 100px;
         margin-top: 20px;
@@ -26,6 +32,43 @@
         margin-left: 10%;
 
     }
+    #filters{
+        margin-left: 10px;
+
+        margin-top: 5%;
+
+    }
+  /*  #drop_down_container{
+        display: inline;
+        float: left;
+    }*/
+    #drop_down_container{
+        margin-top: 16px;
+        margin-left: 20px;
+    }
+    .drop_down_class{
+        display: inline;
+        float: left;
+        margin-left: 10px;
+    }
+    .rep_button{
+        margin-left: 10px;
+
+
+    }
+  
+    #other_area{
+        margin-top: 5%;
+    }
+
+
+    .gen_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    }
+
+
 </style>
 </head>
 
@@ -34,20 +77,115 @@
 <body>
     <!--header menu and logo-->
 
+
+
+    <div id="drop_down_container">
+        <h7 id="filters"> Please select your Filters to choose drop down  from </h7>
+        <br>
+
+        <div id="drop_down_container">
+
+
+            <div class="mui-dropdown drop_down_class">
+                  <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+                    Organisation
+                    <span class="mui-caret"></span>
+                  </button>
+                  <ul class="mui-dropdown__menu">
+                    <li><a href="#">Apple</a></li>
+                    <li><a href="#">Google</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Space X</a></li>
+                  </ul>
+            </div>
+             <!-- Location DropDown -->
+     
+            <div class="mui-dropdown drop_down_class">
+                  <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+                    Location
+                    <span class="mui-caret"></span>
+                  </button>
+                  <ul class="mui-dropdown__menu">
+                    <li><a href="#">India</a></li>
+                    <li><a href="#">Singapore</a></li>
+                    <li><a href="#">Berlin</a></li>
+                    <li><a href="#">Canada</a></li>
+                  </ul>
+            </div>
+    
+
+            <!-- Department DropDown -->
+    
+             <div class="mui-dropdown drop_down_class">
+                  <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+                    Department
+                    <span class="mui-caret"></span>
+                  </button>
+                  <ul class="mui-dropdown__menu">
+                    <li><a href="#">Tech</a></li>
+                    <li><a href="#">HR</a></li>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Logistics</a></li>
+                  </ul>
+            </div>
+    
+            
+              <!-- Domain DropDown -->
+    
+           <div class="mui-dropdown drop_down_class">
+                  <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+                    Domain
+                    <span class="mui-caret"></span>
+                  </button>
+                  <ul class="mui-dropdown__menu">
+                    <li><a href="#">Asia HR</a></li>
+                    <li><a href="#">India HR</a></li>
+                    <li><a href="#">South India HR</a></li>
+                    <li><a href="#">Regional HR</a></li>
+                  </ul>
+            </div>
+    
+       <div class="mui-dropdown drop_down_class">
+                  <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+                    Audits
+                    <span class="mui-caret"></span>
+                  </button>
+                  <ul class="mui-dropdown__menu">
+                    <li><a href="#">Aug 05,17</a></li>
+                    <li><a href="#">Sept 12,17</a></li>
+                    <li><a href="#">Oct 17,2015</a></li>
+                    <li><a href="#">Jan 15,18</a></li>
+                  </ul>
+            </div>
+    
+                <!-- Submit Button -->
+            <br>
+              <button class="mui-btn" id="gen_button">Generate</button>
+
+
+        </div>
+    </div>
+    <br>
+    <div id="other_area">
+         <div class="rem_area">
+            <h5 class="heading">Have Met Regulations</h5>
+            <canvas id="myChart" width="50px" height="150px"></canvas>
+        </div>
+        <br>
+         <div>   
+            <h5 class="heading"> Criticality</h5>
+            <div id="pie_area">
+                <canvas id="pie_chart" width="50px" height="50px">
+                </canvas>
+           </div>
+        </div>
+    </div>
     <div>
-    <h5 class="heading">Have Met Regulations</h5>
-    <canvas id="myChart" width="50px" height="150px"></canvas>
+              <!-- Accent-colored raised button with ripple -->
+        <button id="gen_button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          Generate/Download
+        </button>
     </div>
-
-    <div>   
-    <h5 class="heading"> Criticality</h5>
-    <div id="pie_area">
-    <canvas id="pie_chart" width="50px" height="50px">
-        
-    </canvas>
-    </div>
-    </div>
-
        
   
 </body>

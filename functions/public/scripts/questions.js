@@ -8,6 +8,7 @@ var deptId = getUrlParameter('deptId');
 var locationId = getUrlParameter('locationId');
 var orgId = getUrlParameter('orgId');
 var domainId = getUrlParameter('domainId');
+var fileURL;
 
 var reqBody = JSON.stringify({domainId:parseInt(domainId)});
 
@@ -27,22 +28,28 @@ $.ajax({
             
 
             // Yes Radio Button
-            var yesButton =  '<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1"><input type="radio" id="yes" class="mdl-radio__button" name="options" value="1" checked><span class="mdl-radio__label">Yes</span>';
-            var noButton = '<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1"><input type="radio" id="no" class="mdl-radio__button" name="options" value="1" checked><span class="mdl-radio__label">No</span>';
-            var partialButton = '<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1"><input type="radio" id="partial" class="mdl-radio__button" name="options" value="1" checked><span class="mdl-radio__label">Partial</span>';;
-            var attachmentButton = '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Attach File</button>';
-            var TextBox = '<div class="mdl-textfield mdl-js-textfield"><textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea><label class="mdl-textfield__label" for="sample5">Optional Descrption..</label></div>';
-            var criticalButton = '<label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect"><input type="checkbox" id="switch1" class="mdl-switch__input"><span class="mdl-switch__label">Criticalilty</span></label>';
-            var totalDiv =    '<div class="question_item"><h2>'+ques.questionText+'</h2>'+yesButton+noButton+partialButton+attachmentButton+TextBox+criticalButton+'</div>';
+            var yesButton =  '<div class= "q_item"><label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1"><input type="radio" id="yes" class="mdl-radio__button" name="options" value="1" checked><span class="mdl-radio__label">Yes</span></div>';
+            var noButton = '<div class= "q_item"><label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1"><input type="radio" id="no" class="mdl-radio__button" name="options" value="1" checked><span class="mdl-radio__label">No</span></div>';
+            var partialButton = '<div class= "q_item"><label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1"><input type="radio" id="partial" class="mdl-radio__button" name="options" value="1" checked><span class="mdl-radio__label">Partial</span></div>';;
+            var attachmentButton = '<br><div></div><div><p>Attach File: </p>  </div>  <input id="cMediaCapture" type="file"></div>';
+            var TextBox = '<div class= "text_item"><div class="mdl-textfield mdl-js-textfield"><textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" ></textarea><label class="mdl-textfield__label" for="sample5">Optional Descrption..</label></div></div>';
+            var criticalButton = '<div class="critical_bttn"><label for="switch1" class="mdl-switch mdl-js-switch mdl-js-ripple-effect"><input type="checkbox" id="switch1" class="mdl-switch__input"><span class="mdl-switch__label">Critical</span></label></div>';
+            var saveButton = '<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Button</button>'
+            var totalDiv =    '<div class = "total_div"><h5>'+ques.questionText+'</h5><div>'+yesButton+noButton+partialButton+attachmentButton+TextBox+criticalButton;
 
             $('#list-items').append(totalDiv);
-        }
-    },
+        };
+       
+      },
     error: function(){alert('Error retrieving data. Please try again later.');}
 });
 
-$('#options').click(function(){
-    $('#admin-user').toggle();
+$('#v_audits').click(function(){
+    window.location.href = 'dash';
+});
+
+$('#n_audit').click(function(){
+    window.location.href = 'dash';
 });
 
 

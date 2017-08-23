@@ -45,18 +45,11 @@ $('#orgs').click(function(){
                 $("#list-items").on("click", "div", function() {
                    
                     var status = $(this).attr('id');
-                    alert("Organiation Clicked :" +status);
+                   
                     window.location.href = 'location?orgId='+status;
                     
                 });
-                $(document).on({
-                      mouseenter: function () {
-                        $(this).animate({ height: "200", width: "200", left: "-=55", top: "-=55" }, "fast");
-                      },
-                      mouseleave: function () {
-                        $(this).animate({ height: "90", width: "90", left: "+=55", top: "+=55" }, "fast");
-                      }    
-                    }, '.img a img');
+           
                 
             },
             error: function(){alert('Error retrieving data. Please try again later.');}
@@ -102,29 +95,14 @@ $('#submitName').click(function(){
                 
                 }
             });
+
     }
 });
 
 
 //opens dashboard
-$('#dash').click(function(){
-    var wel = $('.welcome');
-    var dashboard = $('#dashboard');
-    var list = $('#list-items');
-    var listIsVisible = list.is(':visible');
-    var dashIsVisible = dashboard.is(':visible');
-    var welIsVisible = wel.is(':visible');
-    if (welIsVisible) {
-        wel.toggle();
-        dashboard.show();
-    } else if (listIsVisible) {
-        list.toggle();
-        dashboard.show();
-    } else if (dashIsVisible) {
-        dashboard.toggle();
-        wel.show();
-    } else {
-        dashboard.show();
-    }
+$('#dashboard').click(function(){
+    
+     window.location.href = 'dash';
     
 });

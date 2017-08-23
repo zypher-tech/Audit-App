@@ -1,7 +1,7 @@
 
 
- var ctx = document.getElementById("myChart").getContext("2d");
- var chart = document.getElementById("pie_chart").getContext("2d");
+var ctx = document.getElementById("myChart").getContext("2d");
+var chart = document.getElementById("pie_chart").getContext("2d");
 ctx.canvas.width = 150;
 ctx.canvas.height = 300;
 chart.canvas.width = 150;
@@ -70,6 +70,51 @@ var myPieChart = new Chart(chart,{
 
 
 
+
+
+
+('#gen_button').click(function(){
+
+    
+$.ajax({
+    type: "POST",
+    url: getlink,
+    data:reqBody,
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+
+    success: function(res) {
+        console.log("Got response : "+res.status);
+        $('.loading').remove();
+        $('.list-item').remove();
+         if (res.status == 1) {
+             for(var i=0; i< res.locations.length; i++) {
+                var locs = res.locations[i];
+                //display list of location filtering using orgid
+                 var newDiv = '<div class="list-item another_div" id="'+locs.locationId+'"><h6>'+locs.locationName+'</h6></div>';
+                 $('#list-items').append(
+                             newDiv  // '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
+                  ); 
+                // $('#list-items').append(
+                //     '<a href="department.hbs?locationId='+locs.locationId+'&orgId='+locs.orgid+'"><div class="list-item"><h6>'+locs.locationName+'</h6></div></a>'
+                // );
+            };
+             $("#list-items").on("click", "div", function() {
+                   
+                    var aid = $(this).attr('id');
+                    window.location.href ='department?locationId='+aid+'&orgId'+orgid;
+                });
+
+        }
+        else{
+            console.log("no status");
+        }
+    },
+    error: function(){
+        alert('Error retrieving data. Please try again later.');
+    }
+});
+});
 
 
 // var getLocations = ;

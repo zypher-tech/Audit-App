@@ -11,6 +11,30 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <style type="text/css">
+    .q_item{
+        display: inline;
+        float: left;
+    }
+    .total_div{
+        margin-top: 10px;
+        border: 2px solid black;
+        padding-top: 5px;
+        padding-left: 12px;
+
+
+    }
+    .tp_container{
+        margin-left: 16PX;
+        align-items: center;
+        align-content: center;
+    }
+
+    .text_item,.critical_bttn{
+        display: inline;
+    }
+
+    </style>
 </head>
 <body>
     <!--header menu and logo-->
@@ -47,9 +71,28 @@
         <div id="nav-bar">
             <button onclick="goBack()" class="mdl-button mdl-js-button mdl-button--accent">Go Back</button>
         </div>
-        <div id="list-items">
-            <!--list of organizations would go here-->
-            <div class="loading"><div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div></div>
+        <div class="inner_content">
+        <!-- Button For Audit Holder -->
+            <div class="tp_container">
+                <!-- New Audit Button -->
+                   <!--Create button-->
+                    <button class="mdl-button mdl-js-button  mdl-js-ripple-effect mdl-button--colored" id="v_audits">
+                      View Audits
+                    </button>
+                <!-- Old Audit Button -->
+                   <!--Create button-->
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored" id="n_audit">
+                     New Audits
+                    </button>
+                <!-- DashBoard Page -->
+            </div>
+            <div class = "list_view"  id="list-items">
+                <!--list of organizations would go here-->
+                <div class="loading">
+                    <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                </div>
+
+            </div>
         </div>
     </div>
     

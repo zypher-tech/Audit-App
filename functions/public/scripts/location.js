@@ -25,7 +25,7 @@ $.ajax({
              for(var i=0; i< res.locations.length; i++) {
                 var locs = res.locations[i];
                 //display list of location filtering using orgid
-                 var newDiv = '<div class="list-item" id="'+locs.locationId+'"><h6>'+locs.locationName+'</h6></div>';
+                 var newDiv = '<div class="list-item another_div" id="'+locs.locationId+'"><h6>'+locs.locationName+'</h6></div>';
                  $('#list-items').append(
                              newDiv  // '<a href="location.hbs?orgid='+org.id+'"><div class="list-item"><h2>'+org.name+'</h2></div></a>'
                   ); 
