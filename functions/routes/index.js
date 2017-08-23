@@ -5,7 +5,7 @@ const app=express();
 var router = express.Router();
 var db = firebase.database();
 const cors = require('cors')({origin: true});
-var docx = require('docx');
+// var docx = require('docx');
 
 
 router.get('/home',(req,res)=> {
@@ -778,6 +778,7 @@ router.post('/saveAnswer',(req, res) => {
 
 
 
+
 router.post('/generateByDomain',(req, res) => {
 
 	var domainId = req.body.domainId;
@@ -839,26 +840,106 @@ router.post('/generateByDomain',(req, res) => {
 
 
 
+
+
 router.get('/getDocument',(req,res)=>{
 
-var doc = new docx.Document();
 
-var paragraph = new docx.Paragraph("Hello World");
-var institutionText = new docx.TextRun("University College London").bold();
-var dateText = new docx.TextRun("5th Dec 2015").tab().bold();
-paragraph.addRun(institutionText);
-paragraph.addRun(dateText);
 
-doc.addParagraph(paragraph);
 
-// Feature coming soon
-// var media = new docx.Media();
-// media.addMedia("happy-penguins", "./demo/penguins.jpg");
-// var pictureRun = new docx.PictureRun(media.getMedia("happy-penguins"));
+	var JSZip = require('jszip');
+	var Docxtemplater = require('docxtemplater');
 
-// var exporter = new docx.LocalPacker(doc);
-var exporter = new docx.LocalPacker(doc);
-exporter.pack('My Document');
+	var fs = require('fs');
+	var path = require('path');
+
+	//Load the docx file as a binary
+	var content = fs
+	    .readFileSync(path.resolve(__dirname, 'input.docx'), 'binary');
+
+	var zip = new JSZip(content);
+
+	var doc = new Docxtemplater();
+	doc.loadZip(zip);
+
+	//set the templateVariables
+	doc.setData({
+	    first_name: 'John',
+	    last_name: 'Doe',
+	    phone: '0652455478',
+	    description: 'New Website'
+	});
+
+	try {
+	    // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+	    doc.render()
+	}
+	catch (error) {
+	    var e = {
+	        message: error.message,
+	        name: error.name,
+	        stack: error.stack,
+	        properties: error.properties,
+	    }
+	    console.log(JSON.stringify({error: e}));
+	    // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+	    throw error;
+	}
+
+	var buf = doc.getZip()
+	             .generate({type: 'nodebuffer'});
+
+	// buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+	fs.writeFileSync(path.resolve(__dirname, 'output.docx'), res);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// COpied from DOCx Module
+
+// var doc = new docx.Document();
+
+// var paragraph = new docx.Paragraph("Hello World");
+// var institutionText = new docx.TextRun("University College London").bold();
+// var dateText = new docx.TextRun("5th Dec 2015").tab().bold();
+// paragraph.addRun(institutionText);
+// paragraph.addRun(dateText);
+
+// doc.addParagraph(paragraph);
+
+// // Feature coming soon
+// // var media = new docx.Media();
+// // media.addMedia("happy-penguins", "./demo/penguins.jpg");
+// // var pictureRun = new docx.PictureRun(media.getMedia("happy-penguins"));
+
+// // var exporter = new docx.LocalPacker(doc);
+// 	var exporter = new docx.ExpressPacker(doc, res);
+
+// 	// var exporter = new docx.ExpressPacker(doc, res);
+
+// exporter.pack('My Document');
 	// //const numberedAbstract = numbering.createAbstractNumbering();
 	//  var data=[{
 	//  	 "question":"Is the HR Following Best Diversity Practices?",

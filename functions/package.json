@@ -8,13 +8,17 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "debug": "^3.0.0",
+    "docx": "2.1.1",
+    "docxtemplater": "^3.1.6",
     "express": "^4.15.4",
     "firebase-admin": "~4.2.1",
     "firebase-functions": "^0.5.7",
     "firebase-tools": "^3.9.2",
+    "fs": "0.0.1-security",
     "handlebars": "^4.0.10",
-    "path": "^0.12.7",
-    "docx":"2.1.1"
+    "jszip": "^2.6.1",
+    "os": "^0.1.1",
+    "path": "^0.12.7"
   },
   "private": true
 }
