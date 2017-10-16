@@ -8,6 +8,103 @@ const cors = require('cors')({origin: true});
 // var docx = require('docx');
 
 
+
+
+
+
+
+
+
+
+// Related TO Asset App this is here for the Time being
+router.post('/saveAsset',(req,res)=> {
+   	var newAssetObject = {
+   		assetId:Date.now(),
+   		assetName:req.body.assetName,
+   		assetStatus:1,
+   		type:req.body.type,
+   		description:req.body.description,
+   		orgName:req.body.orgName,
+   		location:req.body.location,
+   		deptName:req.body.deptName,
+   		roomNo:req.body.roomNo
+   	};
+
+   	var assetRef = db.ref("assets");
+   	assetRef.push(newAssetObject,err=>{
+   		if (err) {
+   			res.send({status:0});
+   		}
+   		else{
+   			newAssetObject.status = 1;
+   			res.send(newAssetObject);
+   		}
+   	});
+
+
+
+   	       // mJsonObject.put("assetName",name);
+           //  mJsonObject.put("orgName",orgname);
+           //  mJsonObject.put("location",location);
+           //  mJsonObject.put("deptName",deptName);
+           //  mJsonObject.put("roomName",roomNo);
+});
+
+router.get('/getAssetDetails',(req,res)=> {
+		
+
+		// get Asset Id   	
+		var assetId = req.query.id;
+		var asssetRef = db.ref("assets");	
+		var returnJson = {};
+		asssetRef.once("value",snap => {
+					if (snap.val()) {
+
+						// snap exists
+						snap.forEach(s=>{
+							if (s.val().assetId == assetId) {
+								 // 	
+
+								returnJson.assetName = s.val().assetName;
+								returnJson.assetId = s.val().assetId;
+								returnJson.assetStatus = s.val().assetStatus;
+								returnJson.deptName = s.val().deptName;
+								returnJson.location = s.val().location;
+								returnJson.roomNo = s.val().roomNo;
+								returnJson.orgName = s.val().orgName;
+								returnJson.type = s.val().type;
+								returnJson.description = s.val().description;
+								returnJson.status = 1;
+								res.send(returnJson);
+							}
+						});
+					}
+					else{
+							res.send({status:0});
+					}
+
+
+
+
+					// if (snap.val()) {	
+					// 	console.log("hit");
+					// 	res.send(snap.val());
+					// }	
+					// else{
+					// 	console.log("Fail");
+					// 	res.send({status:0});
+		});
+});
+
+
+
+
+
+
+
+
+
+
 router.get('/home',(req,res)=> {
     res.render('home');
 });
@@ -47,6 +144,8 @@ router.get('/audit',(req,res)=> {
 
 
 // Working
+
+
 
 
 router.post('/createOrganisation', (req, res) => {
@@ -846,6 +945,16 @@ router.get('/getDocument',(req,res)=>{
 
 
 
+		var docx = require('docx');
+
+		var doc = new docx.Document();
+		var paragraph = new docx.Paragraph("Short hand notation for adding text.");
+		doc.addParagraph(paragraph);
+		var exporter = new docx.ExpressPacker(doc, res);
+		exporter.pack('My Document');
+
+});
+/*
 
 	var JSZip = require('jszip');
 	var Docxtemplater = require('docxtemplater');
@@ -893,7 +1002,7 @@ router.get('/getDocument',(req,res)=>{
 	fs.writeFileSync(path.resolve(__dirname, 'output.docx'), res);
 
 
-
+*/
 
 
 
@@ -993,7 +1102,7 @@ router.get('/getDocument',(req,res)=>{
 	// var exporter = new docx.ExpressPacker(doc, res);
 	//  
 	// exporter.pack('Apple-Bang_Tech_Report');
-});
+// });
 
 
 
